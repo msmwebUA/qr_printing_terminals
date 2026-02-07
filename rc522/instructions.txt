@@ -1,0 +1,30 @@
+# 0. RC522 Pinout and testing
+    RC522 → Raspberry Pi 5 GPIO pins:
+    * SDA (SS) → GPIO 8 (Pin 24)
+    * SCK → GPIO 11 (Pin 23)
+    * MOSI → GPIO 10 (Pin 19)
+    * MISO → GPIO 9 (Pin 21)
+    * IRQ → Not connected (optional)
+    * GND → Ground (Pin 20)
+    * RST → GPIO 25 (Pin 22)
+    * 3.3V → 3.3V (Pin 17)
+
+# 1. Enable SPI interface 
+	sudo raspi-config 
+
+	# Navigate to: Interface Options → SPI → Enable 
+	then reboot
+
+# 2. Install system dependencies 
+	sudo apt update 
+	sudo apt install python3-lgpio liblgpio-dev 
+
+# 3. Create and activate virtual environment 
+	python3 -m venv ~/Documents/rc522/rfid_venv 
+	source ~/Documents/rc522/rfid_venv/bin/activate 
+
+# 4. Install Python packages 
+	pip install rpi-lgpio mfrc522 spidev 
+
+# 5. Test with your code 
+	python your_script.py

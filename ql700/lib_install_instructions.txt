@@ -1,0 +1,67 @@
+--- README ---
+https://github.com/pklaus/brother_ql/blob/master/README.md
+
+
+--- INSTALLATION ---
+
+Step-by-step installation of brother_ql library on Raspberry Pi (assumes Raspberry Pi OS / Debian):
+
+Note. Python requirenments are saved into txt file.
+
+1. Update the system
+
+  sudo apt update
+  sudo apt upgrade -y
+
+2. Install system packages / libraries
+
+  sudo apt install -y python3 python3-pip python3-venv \
+      libusb-1.0-0-dev build-essential \
+      gcc
+
+3. Create & activate a virtual environment (optional but recommended) 
+
+  python3 -m venv ~/Documents/ql700/qlvenv
+  source ~/Documents/ql700/qlvenv/activate
+  pip install --upgrade pip
+
+4. Install Python packages
+
+  pip install --upgrade brother_ql pillow qrcode pyusb
+
+5. Detect the USB printer ID (lsusb). Plug the Brother QL into the Pi and run:
+
+  lsusb
+
+  You’ll see a line like:
+  Bus 001 Device 005: ID 04f9:2042 Brother Industries, Ltd QL-700
+
+  04f9 is Brother’s vendor ID; 
+  2042 is the product ID for that model in this example. 
+  Values is saved in ids.txt file.
+
+6. Give non-root access to the printer
+
+  sudo nano /etc/udev/rules.d/99-brother-ql.rules
+
+  Paste:
+# Brother QL printers - allow read/write for group lp
+SUBSYSTEM=="usb", ATTR{idVendor}=="04f9", ATTR{idProduct}=="2042", MODE="0666", GROUP="lp"
+
+  Replace idVendor/idProduct with the values from your lsusb output.
+  Save and exit. 
+  
+7. Reload udev rules:
+
+  sudo udevadm control --reload-rules
+  sudo udevadm trigger
+
+8. Add your user to the lp group (so group matches rule):
+
+  sudo usermod -aG lp $USER
+
+9 Log out / log in or run:
+  
+  newgrp lp
+
+(If the product ID varies by model, either insert the specific idProduct for your printer or omit ATTR{idProduct} to match all Brother devices from that vendor — but prefer specific IDs.) Community guides show this is a common step to fix permissions on Pi.

@@ -1,0 +1,12 @@
+Wareshare touchscreen config
+
+1. Open rpi config file
+
+  sudo nano /boot/firmware/config.txt
+
+  # Add to the end of file
+  dtoverlay=vc4-kms-dsi-waveshare-panel,10_1_inch,dsi0
+
+2. Save file
+
+3. Reboot

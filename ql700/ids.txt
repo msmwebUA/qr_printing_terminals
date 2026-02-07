@@ -1,0 +1,4 @@
+Brother Industries, Ltd
+QL-700 Label Printer
+Vendor ID 04f9
+Product ID 2042
