@@ -8,5 +8,5 @@ config = Config()
 
 scan = ScanCard(config)
 # read returns list with 2 elements [code 0 or 1, error message or card data]
-scan.read()
+print(scan.read())
 

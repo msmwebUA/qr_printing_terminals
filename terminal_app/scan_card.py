@@ -16,7 +16,7 @@ class ScanCard():
       while True:
         id, text = reader.read()
         if (id and text):
-          return [1, text]
+          return [1, text.strip()]
         counter += 1
         # limit false scans
         if counter > self.config.max_scans:
