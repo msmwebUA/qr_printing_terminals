@@ -6,10 +6,10 @@ class ScanCard():
   def __init__(self, config: object):
     self.config = config
 
-  """Read data from rfid card. Return list with 2 elements: 
-      list[0] is result code (0 - error, 1 - success), 
-      list[1] is error message or text from card"""
   def read(self) -> list:
+    """Read data from rfid card. Return list with 2 elements: 
+        list[0] is result code (0 - error, 1 - success), 
+        list[1] is error message or text from card"""
     counter = 0
     try:
       reader = SimpleMFRC522()
