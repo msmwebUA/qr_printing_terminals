@@ -8,7 +8,7 @@ class PrintLabel:
   def __init__(self, config: object):
     self.config = config
 
-  def print(self, copies: int) -> list:
+  def print(self, label_obj: object, emp_id: str, copies: int,) -> list:
     """
     Convert label file and send to printer. Parameter copies is number of copies.
     Return list with 2 elements: 
@@ -16,15 +16,24 @@ class PrintLabel:
     list[1] is empty string or error message
     """
     try:
-      qlr = BrotherQLRaster(self.config.printer_model)
-      images = [self.config.label_file] * copies  # same label image repeated
-      instructions = convert(
-        qlr = qlr,
-        images = images,
-        label = self.config.label_type,
-        rotate = '0'
-      )
-      send(instructions, self.config.printer_address)
+      for i in range(copies):
+        # create label
+        label_feedback = label_obj.create(emp_id)
+        if label_feedback[0] == 1:
+          # print("Label was created")
+          # convert and send data to printer
+          qlr = BrotherQLRaster(self.config.printer_model)
+          instructions = convert(
+            qlr = qlr,
+            images = [self.config.label_file],
+            label = self.config.label_type,
+            rotate = '0'
+          )
+          send(instructions, self.config.printer_address)
+        else:
+          # return error message received from label object
+          return [0, "Failed to create label: " + label_feedback[1]]
+      # give feedback if data sent succesfully
       return [1, "Label was sent to printer"]
     except Exception as e:
       return [0, e]
