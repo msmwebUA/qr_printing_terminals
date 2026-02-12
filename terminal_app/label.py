@@ -9,18 +9,18 @@ class Label:
     def __init__(self, config: object):
         self.config = config
 
-    def create(self, empid: str) -> list:
+    def create(self, emp_id: str) -> list:
         """
-        Create label file as PNG. Parameter data is dictionary with empid and labelid. 
+        Create label file as PNG. Parameter data is dictionary with emp_id and label_id. 
         Return list with 2 elements: 
         list[0] is result code (0 - error, 1 - success), 
         list[1] is empty string or error message
         """
         try:
             # Get data for QR and label text
-            data = self.generateData(empid)
-            qr_data = f"{data['empid']}{data['labelid']}" # empid in XXXX format
-            label_text = f"{empid}-{data['labelid']}"
+            data = self.generateData(emp_id)
+            qr_data = f"{data['emp_id']}{data['label_id']}" # emp_id in XXXX format
+            label_text = f"{emp_id}-{data['label_id']}"
 
             # Create QR
             qr = qrcode.QRCode(error_correction=qrcode.constants.ERROR_CORRECT_M, box_size=self.config.qr_box_size, border=self.config.qr_border)
@@ -68,17 +68,16 @@ class Label:
             return [1, "Label image created"]
         except Exception as e:
             return [0, e]
-            
-    @staticmethod    
-    def generateData(empid: str) -> dict:
+               
+    def generateData(self, emp_id: str) -> dict:
         """
-        Generate data for label. Return dict with empid in XXXX format and labelid.
+        Generate data for label. Return dict with emp_id in XXXX format and labelid.
         """
-        # add trealing zeros to empid
-        while len(empid) < 4:
-            empid = "0" + empid
+        # add trealing zeros to emp_id
+        while len(emp_id) < 4:
+            emp_id = "0" + emp_id
 
         # generate labelid using random number
-        labelid = str(randint(1000000, 9999999))
+        label_id = str(randint(self.config.label_id_min, self.config.label_id_max))
         
-        return {"empid": empid, "labelid": labelid}
+        return {"emp_id": emp_id, "label_id": label_id}
