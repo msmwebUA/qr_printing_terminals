@@ -38,5 +38,5 @@ class Config():
     self.label_file = "labels/label_23x23.png"
     # create labels dir if not exists
     main_dir = Path(__file__).parent
-    labels_path = script_dir / "labels"
+    labels_path = main_dir / "labels"
     labels_path.mkdir(exist_ok=True)
