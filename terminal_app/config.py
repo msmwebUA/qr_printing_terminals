@@ -16,6 +16,7 @@ class Config():
       # but usb:// is the usual direct method for brother_ql.
     self.printer_model = "QL-700"
     self.printer_address = "usb://0x04f9:0x2042" # replace with your vendor:product from lsusb
+    self.printer_max_copies = 50
 
     # QR CODE
     self.qr_box_size = 3
@@ -31,4 +32,5 @@ class Config():
     self.label_font_path = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
     self.label_font_size = 14
     self.label_file = "labels/label_23x23.png"
-
+    self.label_id_min = 1000000
+    self.label_id_max = 9999999
