@@ -2,4 +2,6 @@
 
 - Create separate label_id for each copy
 
+- Do not cut each printed label
+
 - Free resources used in program
