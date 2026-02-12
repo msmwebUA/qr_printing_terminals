@@ -1,5 +1,7 @@
 # Class for application configuration
 
+from pathlib import Path
+
 class Config():
   
   def __init__(self):
@@ -31,6 +33,10 @@ class Config():
     self.label_gap = 5  # small gap between QR and text
     self.label_font_path = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
     self.label_font_size = 14
-    self.label_file = "labels/label_23x23.png"
     self.label_id_min = 1000000
     self.label_id_max = 9999999
+    self.label_file = "labels/label_23x23.png"
+    # create labels dir if not exists
+    main_dir = Path(__file__).parent
+    labels_path = script_dir / "labels"
+    labels_path.mkdir(exist_ok=True)
