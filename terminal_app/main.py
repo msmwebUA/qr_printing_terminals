@@ -16,7 +16,7 @@ def main() -> None:
     print("Scan was successful")
     # create label
     label_obj = Label(config)
-    label_feedback = label_obj.create({"empid": scan_feedback[1], "text": "Test"})
+    label_feedback = label_obj.create(scan_feedback[1])
     if label_feedback[0] == 1:
       print("Label was created")
       # print label
