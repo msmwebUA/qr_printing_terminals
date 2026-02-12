@@ -28,3 +28,18 @@ class PrintLabel:
       return [1, "Label was sent to printer"]
     except Exception as e:
       return [0, e]
+
+  def getCopies(self) -> int:
+    """
+    Asks user for number of copies, validates that input is an integer and returns the value.
+    """
+    max_copies = self.config.printer_max_copies
+    while True:
+      try:
+        copies = int(input("Enter number of copies: ").strip())
+        if 1 <= copies <= max_copies:
+          return copies
+        else:
+          print(f"Min 1 and max {max_copies} copies allowed. Try again...")
+      except ValueError:
+        print("Your input is not an integer! Try again...")
