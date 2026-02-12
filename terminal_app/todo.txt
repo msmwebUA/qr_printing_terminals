@@ -1,0 +1,5 @@
+- In Config init: create dir "labels" if not exists
+
+- Create separate label_id for each copy
+
+- Free resources used in program
