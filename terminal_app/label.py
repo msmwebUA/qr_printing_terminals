@@ -9,10 +9,12 @@ class Label:
         self.config = config
 
     def create(self, data: dict) -> list:
-        """Create label file as PNG. Parameter data is dictionary with empid and text. 
+        """
+        Create label file as PNG. Parameter data is dictionary with empid and text. 
         Return list with 2 elements: 
-            list[0] is result code (0 - error, 1 - success), 
-            list[1] is empty string or error message"""
+        list[0] is result code (0 - error, 1 - success), 
+        list[1] is empty string or error message
+        """
         try:
             # Create QR
             empid = data["empid"]
