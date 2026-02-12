@@ -23,7 +23,7 @@ def main() -> None:
       print_obj = PrintLabel(config)
       # number of copies as argument to print method
       copies = print_obj.getCopies()
-      print_feedback = print_label.print(copies)
+      print_feedback = print_obj.print(copies)
       if print_feedback[0] == 1:
         print("Label was sent to printer")
       else:
@@ -31,7 +31,7 @@ def main() -> None:
         print(print_feedback[1])
     else:
       # print label error message
-      print(label_data[1])
+      print(label_feedback[1])
   else:
     # print scan error message
     print(scan_data[1])

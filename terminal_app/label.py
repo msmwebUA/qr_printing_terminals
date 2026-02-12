@@ -34,9 +34,9 @@ class Label:
             draw = ImageDraw.Draw(img)
 
             # Calculate sizes
-            padding = self.config.padding
-            gap = self.config.gap
-            text_height = self.config.text_height
+            padding = self.config.label_padding
+            gap = self.config.label_gap
+            text_height = self.config.label_text_height
 
             # QR code takes remaining space
             available_height = label_size[1] - (2 * padding) - text_height - gap
