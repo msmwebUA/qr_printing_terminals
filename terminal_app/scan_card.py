@@ -1,3 +1,5 @@
+# Class for reading data from rfid card
+
 from mfrc522 import SimpleMFRC522
 import RPi.GPIO as GPIO
 
