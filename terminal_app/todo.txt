@@ -1,5 +1,7 @@
 - Make UI for program
 
+- Include to requirenments.txt new dependencies for installing 
+
 - Free resources used in program
 
 - Program for writing empid data to rfid cards (simple and with UI)
