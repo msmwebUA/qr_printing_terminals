@@ -27,7 +27,8 @@ class PrintLabel:
             qlr = qlr,
             images = [self.config.label_file],
             label = self.config.label_type,
-            rotate = '0'
+            rotate = '0',
+            cut = False
           )
           send(instructions, self.config.printer_address)
         else:
