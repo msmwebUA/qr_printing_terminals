@@ -1,6 +1,8 @@
 - Make UI for program
 
-- Include to requirenments.txt new dependencies for installing 
+- Database class
+
+- Include to requirenments.txt new dependencies for installing pyside6 lib
 
 - Free resources used in program
 
