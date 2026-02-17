@@ -691,11 +691,15 @@ class PrintManager:
 - **Throughput**: Number of scans/prints per minute
 - [Add more terms as needed]
 
+Append Terminal App logic schema (pdf)
+App database schema
+
 ### Appendix B: Code Samples
 [Include key code snippets or full modules]
 
 ### Appendix C: Circuit Diagrams
 [Include hardware wiring diagrams if applicable]
+[RPI pinout]
 
 ### Appendix D: Additional Resources
 - Links to repositories
