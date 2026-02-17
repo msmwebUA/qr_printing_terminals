@@ -1,7 +1,5 @@
-- In Config init: create dir "labels" if not exists
-
-- Create separate label_id for each copy
-
-- Do not cut each printed label
+- Make UI for program
 
 - Free resources used in program
+
+- Program for writing empid data to rfid cards (simple and with UI)
