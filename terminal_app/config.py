@@ -39,10 +39,12 @@ class Config():
     self.label_font_size = 14
     self.label_id_min = 1000000
     self.label_id_max = 9999999
-    self.label_file = "labels/label_23x23.png"
+    self.label_id_check = True # check if label ID already exists in database
     # create labels dir if not exists
     labels_path = main_dir/"labels"
     labels_path.mkdir(exist_ok=True)
+    self.label_file = labels_path/"label_23x23"
+    self.label_file_extension = ".png"
 
     # DATABASE
     # create db dir if not exists

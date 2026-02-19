@@ -16,26 +16,29 @@ class PrintLabel:
     list[1] is empty string or error message
     """
     try:
-      for i in range(copies):
-        # create label
-        label_feedback = label_obj.create(emp_id)
-        if label_feedback[0] == 1:
-          # print("Label was created")
-          # convert and send data to printer
-          qlr = BrotherQLRaster(self.config.printer_model)
-          instructions = convert(
-            qlr = qlr,
-            images = [self.config.label_file],
-            label = self.config.label_type,
-            rotate = '0',
-            cut = False
-          )
-          send(instructions, self.config.printer_address)
-        else:
-          # return error message received from label object
-          return [0, "Failed to create label: " + label_feedback[1]]
-      # give feedback if data sent succesfully
-      return [1, "Label was sent to printer"]
+
+      # TODO: check if printer is online
+      # TODO: check if printer has paper
+
+      # create labels
+      label_feedback = label_obj.create(emp_id, copies)
+      if label_feedback[0] == 1:
+        # convert and send data to printer
+        qlr = BrotherQLRaster(self.config.printer_model)
+        instructions = convert(
+          qlr = qlr,
+          images = label_feedback[1]["label_files"],
+          label = self.config.label_type,
+          rotate = '0',
+          cut = False
+        )
+        send(instructions, self.config.printer_address)
+      else:
+        # return error message received from label object
+        return [0, "Failed to create label: " + label_feedback[1]]
+      # return "success" and generated labels data for database processing
+      return [1, label_feedback[1]]
+    # return error
     except Exception as e:
       return [0, e]
 

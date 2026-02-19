@@ -1,3 +1,5 @@
 .DS_Store
 venv/
 __pycache__/
+terminal_app/db/terminal.db
+terminal_app/test.py

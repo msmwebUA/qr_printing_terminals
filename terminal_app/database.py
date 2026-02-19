@@ -1,7 +1,9 @@
 # Class for database operations
 
 import sqlite3 as db
+from contextlib import closing
 from datetime import datetime
+from random import randint
 
 class Database:
   def __init__(self, config: object) -> None:
@@ -26,6 +28,8 @@ class Database:
       "many": False,
       "data": ()
     })
+    
+    # TODO: create index for label_id table if not exists
 
   def addLogEntry(self, emp_id: str, copies: int, error_msg: str) -> None:
     """
@@ -70,15 +74,46 @@ class Database:
     db.Error: if a database error occurs
     """
     try:
-      with db.connect(self.config.db_file) as connection:
-        cursor = connection.cursor()
-        if params["many"]:
-          cursor.executemany(params["query"], params["data"])
-        else:
-          cursor.execute(params["query"], params["data"])
-        connection.commit()
+      with closing(db.connect(self.config.db_file)) as connection:
+        with connection:
+          cursor = connection.cursor()
+          if params["many"]:
+            cursor.executemany(params["query"], params["data"])
+          else:
+            cursor.execute(params["query"], params["data"])
     except db.Error as e:
       # Add database error to log file instead table
       with open(self.config.db_error_log_file, "a") as f:
         f.write(f"{daterime.now().strftime('%d.%m.Y %H:%M:%S')} - {e}")
       print(f"Database error: {e}")
+
+  @staticmethod
+  def generateLabelData(config: object, data: dict) -> dict:
+    """
+    Generates data for labels. Returns dict with emp_id as str in XXXX format and label_ids as list.
+    
+    Parameters:
+    config (object): application configuration
+    data (dict): dictionary with data passed from label object
+    
+    Returns:
+    dict: dictionary with emp_id and label_ids, or None if no free label IDs were found
+    """
+    with closing(db.connect(config.db_file)) as connection:
+      with connection:
+        cursor = connection.cursor()
+        for i in range(data["copies"]):
+          exists = True
+          while exists:
+            label_id = randint(config.label_id_min, config.label_id_max)
+            db_label_id = int(f"{emp_id}{label_id}")
+            print(db_label_id) # test purposes
+            # Check if label_id already exists in database
+            cursor.execute(f"SELECT 1 FROM {config.db_label_id_table} WHERE label_id = ?", (db_label_id,))
+            if not cursor.fetchone():
+              exists = False
+              data["label_ids"].append(str(label_id))
+    if data["label_ids"]:
+      return data
+    else:
+      return None

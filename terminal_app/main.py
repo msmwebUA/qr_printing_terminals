@@ -26,14 +26,21 @@ def main() -> None:
     # print label
     print_feedback = print_obj.print(label_obj, emp_id, copies)
     if print_feedback[0] == 1:
-      # add log entry to db
-      db.addLogEntry(emp_id, copies, "")
+      # add all printed label_ids to database
+      printed_data = print_feedback[1]
+      rows = []
+      for label_id in printed_data["label_ids"]:
+        row = int(f"{printed_data['emp_id']}{label_id}")
+        rows.append((row,))
+      db.addLabelId(rows)
+      db_msg = ""
       print("Label was sent to printer")
     else:
-      # add log entry to db
-      db.addLogEntry(emp_id, copies, print_feedback[1])
+      db_msg = print_feedback[1]
       # print printer error message
       print(print_feedback[1])
+    # add log entry to db
+    db.addLogEntry(emp_id, copies, db_msg)
   else:
     # add log entry to db
     db.addLogEntry(0, 0, scan_data[1])
