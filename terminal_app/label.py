@@ -29,8 +29,9 @@ class Label:
             if data:
                 emp_id_xxxx = data["emp_id"]
                 for i in range(copies):
-                    qr_data = f"{emp_id_xxxx}{data['label_ids'][i]}" # emp_id in XXXX format
-                    label_text = f"{emp_id}-{data['label_id']}" # emp_id as is
+					label_id = data['label_ids'][i]
+                    qr_data = f"{emp_id_xxxx}{label_id}" # emp_id in XXXX format
+                    label_text = f"{emp_id}-{label_id}" # emp_id as is
 
                     # Create QR
                     qr = qrcode.QRCode(error_correction=qrcode.constants.ERROR_CORRECT_M, box_size=self.config.qr_box_size, border=self.config.qr_border)

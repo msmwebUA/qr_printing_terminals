@@ -31,7 +31,7 @@ class Database:
     
     # TODO: create index for label_id table if not exists
 
-  def addLogEntry(self, emp_id: str, copies: int, error_msg: str) -> None:
+  def addLogEntry(self, emp_id: str, copies: str, error_msg: str) -> None:
     """
     Adds a log entry to the database.
     
@@ -80,11 +80,12 @@ class Database:
           if params["many"]:
             cursor.executemany(params["query"], params["data"])
           else:
+            print(params)
             cursor.execute(params["query"], params["data"])
     except db.Error as e:
       # Add database error to log file instead table
       with open(self.config.db_error_log_file, "a") as f:
-        f.write(f"{daterime.now().strftime('%d.%m.Y %H:%M:%S')} - {e}")
+        f.write(f"{datetime.now().strftime('%d.%m.Y %H:%M:%S')} - {e}")
       print(f"Database error: {e}")
 
   @staticmethod
@@ -106,7 +107,7 @@ class Database:
           exists = True
           while exists:
             label_id = randint(config.label_id_min, config.label_id_max)
-            db_label_id = int(f"{emp_id}{label_id}")
+            db_label_id = int(f"{data['emp_id']}{label_id}")
             print(db_label_id) # test purposes
             # Check if label_id already exists in database
             cursor.execute(f"SELECT 1 FROM {config.db_label_id_table} WHERE label_id = ?", (db_label_id,))
@@ -114,6 +115,7 @@ class Database:
               exists = False
               data["label_ids"].append(str(label_id))
     if data["label_ids"]:
+      print(data)
       return data
     else:
       return None

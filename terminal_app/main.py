@@ -40,7 +40,7 @@ def main() -> None:
       # print printer error message
       print(print_feedback[1])
     # add log entry to db
-    db.addLogEntry(emp_id, copies, db_msg)
+    db.addLogEntry(emp_id, str(copies), db_msg)
   else:
     # add log entry to db
     db.addLogEntry(0, 0, scan_data[1])
