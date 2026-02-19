@@ -29,7 +29,7 @@ class Label:
             if data:
                 emp_id_xxxx = data["emp_id"]
                 for i in range(copies):
-					label_id = data['label_ids'][i]
+                    label_id = data['label_ids'][i]
                     qr_data = f"{emp_id_xxxx}{label_id}" # emp_id in XXXX format
                     label_text = f"{emp_id}-{label_id}" # emp_id as is
 
