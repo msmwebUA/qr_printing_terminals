@@ -36,14 +36,19 @@ def main() -> None:
       db_msg = None
       print("Label was sent to printer")
     else:
-      db_msg = print_feedback[1]
+      db_msg = str(print_feedback[1])
       # print printer error message
       print(print_feedback[1])
+      # inform user about common errors in clear way
+      if 'Errno 110' or 'Failed to print' in db_msg:
+        print("Something wrong with printer. Are there labels in roll or is cover closed?")
+      if 'Device not found' in db_msg:
+        print("Check connection to printer")
     # add log entry to db
     db.addLogEntry(emp_id, str(copies), db_msg)
   else:
     # add log entry to db
-    db.addLogEntry(0, 0, scan_data[1])
+    db.addLogEntry(0, 0, str(scan_data[1]))
     # print scan error message
     print(scan_data[1])
 

@@ -26,18 +26,21 @@ class PrintLabel:
         # convert and send data to printer
         qlr = BrotherQLRaster(self.config.printer_model)
         instructions = convert(
-          qlr = qlr,
-          images = label_feedback[1]["label_files"],
-          label = self.config.label_type,
-          rotate = '0',
-          cut = False
-        )
-        send(instructions, self.config.printer_address)
+            qlr = qlr,
+            images = label_feedback[1]["label_files"],
+            label = self.config.label_type,
+            rotate = '0',
+            cut = False
+          )
+        status = send(instructions, self.config.printer_address)
+        # return "success" and generated labels data for database processing
+        if status["did_print"]:
+          return [1, label_feedback[1]]
+        else:
+          raise RuntimeError("Response from printer: Failed to print label")
       else:
         # return error message received from label object
         return [0, "Failed to create label: " + label_feedback[1]]
-      # return "success" and generated labels data for database processing
-      return [1, label_feedback[1]]
     # return error
     except Exception as e:
       return [0, e]
