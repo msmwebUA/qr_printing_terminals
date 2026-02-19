@@ -1,12 +1,15 @@
 from scan_card import ScanCard
 from print_label import PrintLabel
 from label import Label
+from database import Database
 # application config
 from config import Config
-# init configuration
+# init configuration 
 config = Config()
 
 def main() -> None:
+  # init database
+  db = Database(config)
   # scan card
   print("Scan your card...")
   scan_obj = ScanCard(config)
@@ -23,11 +26,17 @@ def main() -> None:
     # print label
     print_feedback = print_obj.print(label_obj, emp_id, copies)
     if print_feedback[0] == 1:
+      # add log entry to db
+      db.addLogEntry(emp_id, copies, "")
       print("Label was sent to printer")
     else:
+      # add log entry to db
+      db.addLogEntry(emp_id, copies, print_feedback[1])
       # print printer error message
       print(print_feedback[1])
   else:
+    # add log entry to db
+    db.addLogEntry(0, 0, scan_data[1])
     # print scan error message
     print(scan_data[1])
 

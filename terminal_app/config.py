@@ -7,6 +7,10 @@ class Config():
   def __init__(self):
     # APPLICATION CONFIG
 
+    # GENERAL
+    # main directory
+    main_dir = Path(__file__).parent
+
     # SCANNING
     # max scan times per read action
     self.max_scans = 30
@@ -37,6 +41,14 @@ class Config():
     self.label_id_max = 9999999
     self.label_file = "labels/label_23x23.png"
     # create labels dir if not exists
-    main_dir = Path(__file__).parent
-    labels_path = main_dir / "labels"
+    labels_path = main_dir/"labels"
     labels_path.mkdir(exist_ok=True)
+
+    # DATABASE
+    # create db dir if not exists
+    db_path = main_dir/"db"
+    db_path.mkdir(exist_ok=True)
+    self.db_file = db_path/"terminal.db"
+    self.db_log_table = "printlog"
+    self.db_label_id_table = "label_id"
+    self.db_error_log_file = db_path/"db_errors.log"
