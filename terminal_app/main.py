@@ -33,7 +33,7 @@ def main() -> None:
         row = int(f"{printed_data['emp_id']}{label_id}")
         rows.append((row,))
       db.addLabelId(rows)
-      db_msg = ""
+      db_msg = None
       print("Label was sent to printer")
     else:
       db_msg = print_feedback[1]

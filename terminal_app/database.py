@@ -85,7 +85,7 @@ class Database:
     except db.Error as e:
       # Add database error to log file instead table
       with open(self.config.db_error_log_file, "a") as f:
-        f.write(f"{datetime.now().strftime('%d.%m.Y %H:%M:%S')} - {e}")
+        f.write(f"{datetime.now():%d.%m.%Y %H:%M:%S} - {e}\n")
       print(f"Database error: {e}")
 
   @staticmethod
