@@ -21,9 +21,9 @@ def main() -> None:
     # create label and print objects
     label_obj = Label(config)
     print_obj = PrintLabel(config)
-    # number of copies as argument to print method
+    # number of copies from user input
     copies = print_obj.getCopies()
-    # print label
+    # create and print labels
     print_feedback = print_obj.print(label_obj, emp_id, copies)
     if print_feedback[0] == 1:
       # add all printed label_ids to database

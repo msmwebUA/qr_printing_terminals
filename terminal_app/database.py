@@ -80,7 +80,6 @@ class Database:
           if params["many"]:
             cursor.executemany(params["query"], params["data"])
           else:
-            print(params)
             cursor.execute(params["query"], params["data"])
     except db.Error as e:
       # Add database error to log file instead table
@@ -108,14 +107,12 @@ class Database:
           while exists:
             label_id = randint(config.label_id_min, config.label_id_max)
             db_label_id = int(f"{data['emp_id']}{label_id}")
-            print(db_label_id) # test purposes
             # Check if label_id already exists in database
             cursor.execute(f"SELECT 1 FROM {config.db_label_id_table} WHERE label_id = ?", (db_label_id,))
             if not cursor.fetchone():
               exists = False
               data["label_ids"].append(str(label_id))
     if data["label_ids"]:
-      print(data)
       return data
     else:
       return None
