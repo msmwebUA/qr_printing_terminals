@@ -8,6 +8,7 @@ from random import randint
 class Database:
   def __init__(self, config: object) -> None:
     self.config = config
+    # create tables if not exist
     self.execute({
       "query": f"""
         CREATE TABLE IF NOT EXISTS {self.config.db_log_table} (
@@ -28,8 +29,12 @@ class Database:
       "many": False,
       "data": ()
     })
-    
-    # TODO: create index for label_id table if not exists
+    # create indexes if not exist
+    self.execute({
+      "query": f'CREATE INDEX IF NOT EXISTS {self.config.db_label_id_table}_index ON {self.config.db_label_id_table} ("label_id")',
+      "many": False,
+      "data": ()
+    })
 
   def addLogEntry(self, emp_id: str, copies: str, error_msg: str) -> None:
     """
