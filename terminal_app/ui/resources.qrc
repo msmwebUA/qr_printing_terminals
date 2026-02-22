@@ -1,0 +1,8 @@
+<RCC>
+  <qresource prefix="static">
+    <file>img/scan.png</file>
+    <file>img/start.png</file>
+    <file>img/printer.png</file>
+    <file>img/print.png</file>
+  </qresource>
+</RCC>
