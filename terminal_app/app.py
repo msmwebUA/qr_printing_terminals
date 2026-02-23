@@ -1,14 +1,12 @@
-# from scan_card import ScanCard
-# from print_label import PrintLabel
-# from label import Label
-# from database import Database
-# # application config
-# from config import Config
-# # init configuration 
-# config = Config()
+from scan_card import ScanCard
+from print_label import PrintLabel
+from label import Label
+from database import Database
+# application config
+from config import Config
 
 # import UI
-from PySide6.QtWidgets import QMainWindow
+from PySide6.QtWidgets import QMainWindow, QMessageBox
 from ui import Ui_MainWindow
 
 class App(QMainWindow, Ui_MainWindow):
@@ -20,67 +18,100 @@ class App(QMainWindow, Ui_MainWindow):
     self.stackedWidget.setCurrentIndex(0)
 
     # connect slots (methods) to buttons on signals (events)
-    self.startBtn.clicked.connect(self.start)
+    self.startBtn.clicked.connect(self.scan)
     self.printBtn.clicked.connect(self.print)
     self.cancelBtnScan.clicked.connect(self.cancel)
     self.cancelBtnPrint.clicked.connect(self.cancel)
 
-  
-  def start(self):
-    self.stackedWidget.setCurrentIndex(1)
-    # TODO: start scan
-    # TODO: move to print page when scan is successful
+    # update copies value
+    self.copiesSlider.valueChanged.connect(
+      lambda value: self.copiesValue.setText(f"Copies: {value}")
+    )
 
-  def print(self):
-    pass
+    # init configuration 
+    self.config = Config()
+
+    # init database
+    self.db = Database(config)
+  
+  def scan(self) -> None:
+    self.stackedWidget.setCurrentIndex(1)
+    # scan card
+    scan_obj = ScanCard(config)
+    # read method returns list with 2 elements [code 0 or 1, error message or card data]
+    scan_feedback = scan_obj.read()
+    if scan_feedback[0]:
+      # assign emp_id variable
+      self.emp_id = scan_feedback[1]
+      # move to next page
+      self.stackedWidget.setCurrentIndex(2)
+    else:
+      err = str(scan_feedback[1])
+      # show error dialog
+      showAlert("Scan Error", err, "critical")
+      # add log entry to db
+      self.db.addLogEntry(0, 0, err)
+
+  def print(self) -> None:
+    # create label and print objects
+    label_obj = Label(self.config)
+    print_obj = PrintLabel(self.config)
+    copies = self.copiesSlider.value()
+    # create and print labels
+    print_feedback = print_obj.print(label_obj, self.emp_id, copies)
+    if print_feedback[0]:
+      # add all printed label_ids to database
+      printed_data = print_feedback[1]
+      rows = []
+      for label_id in printed_data["label_ids"]:
+        row = int(f"{printed_data['emp_id']}{label_id}")
+        rows.append((row,))
+      db.addLabelId(rows)
+      error = None
+      # show success dialog
+      showAlert("Print label", "Label was sent to printer", "info")
+    else:
+      error = str(print_feedback[1])
+      alert = None
+      # inform user about common errors in clear way
+      if 'Errno 110' or 'Failed to print' in error:
+        alert = "Something wrong with printer. Are there labels in roll or is cover closed?"
+      if 'Device not found' in error:
+        alert = "Check connection to printer"
+      # show alert
+      showAlert("Print Error", alert if alert else error, "critical")
+    # add log entry to db
+    self.db.addLogEntry(emp_id, str(copies), error)
 
   # return to start page
-  def cancel(self):
+  def cancel(self) -> None:
     # go back to start page
     self.stackedWidget.setCurrentIndex(0)
-    # TODO: clear data
+    # clear data
+    self.clearData()
 
-# def main() -> None:
-#   # init database
-#   db = Database(config)
-#   # scan card
-#   print("Scan your card...")
-#   scan_obj = ScanCard(config)
-#   # read method returns list with 2 elements [code 0 or 1, error message or card data]
-#   scan_feedback = scan_obj.read()
-#   if scan_feedback[0] == 1:
-#     emp_id = scan_feedback[1]
-#     print("Scan was successful")
-#     # create label and print objects
-#     label_obj = Label(config)
-#     print_obj = PrintLabel(config)
-#     # number of copies from user input
-#     copies = print_obj.getCopies()
-#     # create and print labels
-#     print_feedback = print_obj.print(label_obj, emp_id, copies)
-#     if print_feedback[0] == 1:
-#       # add all printed label_ids to database
-#       printed_data = print_feedback[1]
-#       rows = []
-#       for label_id in printed_data["label_ids"]:
-#         row = int(f"{printed_data['emp_id']}{label_id}")
-#         rows.append((row,))
-#       db.addLabelId(rows)
-#       db_msg = None
-#       print("Label was sent to printer")
-#     else:
-#       db_msg = str(print_feedback[1])
-#       # print printer error message
-#       print(print_feedback[1])
-#       # inform user about common errors in clear way
-#       if 'Errno 110' or 'Failed to print' in db_msg:
-#         print("Something wrong with printer. Are there labels in roll or is cover closed?")
-#       if 'Device not found' in db_msg:
-#         print("Check connection to printer")
-#     # add log entry to db
-#     db.addLogEntry(emp_id, str(copies), db_msg)
-#   else:
-#     # add log entry to db
-#     db.addLogEntry(0, 0, str(scan_data[1]))
-#     # print scan error message
-#     print(scan_data[1])
+  def showAlert(self, title: str, text: str, alert_type: str) -> None:
+    if alert_type == "info":
+      alert = QMessageBox.information(self,title, text)
+    elif alert_type == "warning":
+      alert = QMessageBox.warning(self, title, text)
+    elif alert_type == "critical":
+      alert = QMessageBox.critical(self, title, text)
+    else:
+      alert = QMessageBox.information(self, title, text)
+    # OK btn only
+    alert.setStandardButtons(QMessageBox.StandardButton.Ok) 
+    # Show modal dialog
+    res = alert.exec()
+    # handle response
+    if result == QMessageBox.StandardButton.Ok:
+      # go back to start page
+      self.stackedWidget.setCurrentIndex(0)
+      # clear data
+      self.clearData()
+
+  def clearData(self):
+    self.emp_id = None
+    self.copiesSlider.setValue(1)
+    self.empName.setText("Unknown employee")
+    self.empId.setText("EmpID is not set")
