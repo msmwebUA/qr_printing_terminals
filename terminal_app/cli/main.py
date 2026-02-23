@@ -48,9 +48,9 @@ def main() -> None:
     db.addLogEntry(emp_id, str(copies), db_msg)
   else:
     # add log entry to db
-    db.addLogEntry(0, 0, str(scan_data[1]))
+    db.addLogEntry(0, 0, str(scan_feedback[1]))
     # print scan error message
-    print(scan_data[1])
+    print(scan_feedback[1])
 
 if __name__ == "__main__":
   main()
