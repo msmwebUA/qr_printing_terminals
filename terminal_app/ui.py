@@ -204,6 +204,10 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_10.addWidget(self.frame_3)
 
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.verticalLayout_10.addItem(self.verticalSpacer)
+
         self.frame_4 = QFrame(self.printFrame)
         self.frame_4.setObjectName(u"frame_4")
         self.frame_4.setFrameShape(QFrame.Shape.NoFrame)
@@ -253,7 +257,7 @@ class Ui_MainWindow(object):
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Print Labels", None))
         self.dateTimeLabel.setText(QCoreApplication.translate("MainWindow", u"Date and Time", None))
         self.startBtn.setText("")
         self.scanLabel.setText(QCoreApplication.translate("MainWindow", u"Scan your card...", None))
@@ -262,7 +266,7 @@ class Ui_MainWindow(object):
         self.printImg.setText("")
         self.empName.setText(QCoreApplication.translate("MainWindow", u"Employee: ", None))
         self.empId.setText(QCoreApplication.translate("MainWindow", u"EmpID: ", None))
-        self.copiesValue.setText(QCoreApplication.translate("MainWindow", u"Copies: 0", None))
+        self.copiesValue.setText(QCoreApplication.translate("MainWindow", u"Copies: 1", None))
         self.copiesInfo.setText(QCoreApplication.translate("MainWindow", u"\u2139\ufe0f Max 50 labels per time and 100 per day", None))
         self.cancelBtnPrint.setText(QCoreApplication.translate("MainWindow", u"\u274c Cancel", None))
         self.printBtn.setText(QCoreApplication.translate("MainWindow", u"\U0001f5a8\U0000fe0f PRINT", None))

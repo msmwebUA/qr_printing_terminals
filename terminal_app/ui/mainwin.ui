@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Print Labels</string>
   </property>
   <property name="autoFillBackground">
    <bool>false</bool>
@@ -329,7 +329,7 @@
           <item alignment="Qt::AlignmentFlag::AlignHCenter">
            <widget class="QLabel" name="copiesValue">
             <property name="text">
-             <string>Copies: 0</string>
+             <string>Copies: 1</string>
             </property>
            </widget>
           </item>
@@ -370,6 +370,19 @@
           </item>
          </layout>
         </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Orientation::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
        </item>
        <item>
         <widget class="QFrame" name="frame_4">
