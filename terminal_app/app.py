@@ -6,7 +6,7 @@ from database import Database
 from config import Config
 
 # import UI
-from PySide6.QtWidgets import QMainWindow, QMessageBox
+from PySide6.QtWidgets import QMainWindow, QMessageBox, QApplication
 from ui import Ui_MainWindow
 
 class App(QMainWindow, Ui_MainWindow):
@@ -32,23 +32,27 @@ class App(QMainWindow, Ui_MainWindow):
     self.config = Config()
 
     # init database
-    self.db = Database(config)
+    self.db = Database(self.config)
   
   def scan(self) -> None:
     self.stackedWidget.setCurrentIndex(1)
+    QApplication.processEvents() # refresh page immediately
     # scan card
-    scan_obj = ScanCard(config)
+    scan_obj = ScanCard(self.config)
     # read method returns list with 2 elements [code 0 or 1, error message or card data]
     scan_feedback = scan_obj.read()
     if scan_feedback[0]:
       # assign emp_id variable
       self.emp_id = scan_feedback[1]
+      # set text to labels
+      self.empId.setText(f"EmpID: {self.emp_id}")
+      self.empName.setText("Employee: Unknown") 
       # move to next page
       self.stackedWidget.setCurrentIndex(2)
     else:
       err = str(scan_feedback[1])
       # show error dialog
-      showAlert("Scan Error", err, "critical")
+      self.showAlert("Scan Error", err, "critical")
       # add log entry to db
       self.db.addLogEntry(0, 0, err)
 
@@ -66,10 +70,10 @@ class App(QMainWindow, Ui_MainWindow):
       for label_id in printed_data["label_ids"]:
         row = int(f"{printed_data['emp_id']}{label_id}")
         rows.append((row,))
-      db.addLabelId(rows)
+      self.db.addLabelId(rows)
       error = None
       # show success dialog
-      showAlert("Print label", "Label was sent to printer", "info")
+      self.showAlert("Print label", "Label was sent to printer", "info")
     else:
       error = str(print_feedback[1])
       alert = None
@@ -79,9 +83,9 @@ class App(QMainWindow, Ui_MainWindow):
       if 'Device not found' in error:
         alert = "Check connection to printer"
       # show alert
-      showAlert("Print Error", alert if alert else error, "critical")
+      self.showAlert("Print Error", alert if alert else error, "critical")
     # add log entry to db
-    self.db.addLogEntry(emp_id, str(copies), error)
+    self.db.addLogEntry(self.emp_id, str(copies), error)
 
   # return to start page
   def cancel(self) -> None:
@@ -92,23 +96,17 @@ class App(QMainWindow, Ui_MainWindow):
 
   def showAlert(self, title: str, text: str, alert_type: str) -> None:
     if alert_type == "info":
-      alert = QMessageBox.information(self,title, text)
+      QMessageBox.information(self,title, text)
     elif alert_type == "warning":
-      alert = QMessageBox.warning(self, title, text)
+      QMessageBox.warning(self, title, text)
     elif alert_type == "critical":
-      alert = QMessageBox.critical(self, title, text)
+      QMessageBox.critical(self, title, text)
     else:
-      alert = QMessageBox.information(self, title, text)
-    # OK btn only
-    alert.setStandardButtons(QMessageBox.StandardButton.Ok) 
-    # Show modal dialog
-    res = alert.exec()
-    # handle response
-    if result == QMessageBox.StandardButton.Ok:
-      # go back to start page
-      self.stackedWidget.setCurrentIndex(0)
-      # clear data
-      self.clearData()
+      QMessageBox.information(self, title, text)
+    # go back to start page (user clicked OK or X in modal dialog)
+    self.stackedWidget.setCurrentIndex(0)
+    # clear data
+    self.clearData()
 
   def clearData(self):
     self.emp_id = None
