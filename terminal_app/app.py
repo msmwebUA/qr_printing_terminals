@@ -4,6 +4,8 @@ from label import Label
 from database import Database
 # application config
 from config import Config
+# garbage cleaning
+import gc
 
 # import UI
 from PySide6.QtWidgets import QMainWindow, QMessageBox, QApplication
@@ -71,21 +73,22 @@ class App(QMainWindow, Ui_MainWindow):
         row = int(f"{printed_data['emp_id']}{label_id}")
         rows.append((row,))
       self.db.addLabelId(rows)
-      error = None
+      # add log entry to db
+      self.db.addLogEntry(self.emp_id, str(copies), None)
       # show success dialog
       self.showAlert("Print label", "Label was sent to printer", "info")
     else:
       error = str(print_feedback[1])
       alert = None
       # inform user about common errors in clear way
-      if 'Errno 110' or 'Failed to print' in error:
+      if 'Errno 110' in error or 'Failed to print' in error:
         alert = "Something wrong with printer. Are there labels in roll or is cover closed?"
       if 'Device not found' in error:
         alert = "Check connection to printer"
-      # show alert
+      # add log entry to db
+      self.db.addLogEntry(self.emp_id, str(copies), error)
+      # show alert and clear data
       self.showAlert("Print Error", alert if alert else error, "critical")
-    # add log entry to db
-    self.db.addLogEntry(self.emp_id, str(copies), error)
 
   # return to start page
   def cancel(self) -> None:
@@ -113,3 +116,4 @@ class App(QMainWindow, Ui_MainWindow):
     self.copiesSlider.setValue(1)
     self.empName.setText("Unknown employee")
     self.empId.setText("EmpID is not set")
+    gc.collect()
