@@ -284,14 +284,14 @@
              <item alignment="Qt::AlignmentFlag::AlignLeft">
               <widget class="QLabel" name="empName">
                <property name="text">
-                <string>empName</string>
+                <string>Employee: </string>
                </property>
               </widget>
              </item>
              <item alignment="Qt::AlignmentFlag::AlignLeft">
               <widget class="QLabel" name="empId">
                <property name="text">
-                <string>empId</string>
+                <string>EmpID: </string>
                </property>
               </widget>
              </item>
@@ -329,17 +329,23 @@
           <item alignment="Qt::AlignmentFlag::AlignHCenter">
            <widget class="QLabel" name="copiesValue">
             <property name="text">
-             <string>copiesValue</string>
+             <string>Copies: 0</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QSlider" name="copiesSlider">
+            <property name="minimum">
+             <number>1</number>
+            </property>
+            <property name="maximum">
+             <number>50</number>
+            </property>
             <property name="singleStep">
              <number>5</number>
             </property>
             <property name="value">
-             <number>0</number>
+             <number>1</number>
             </property>
             <property name="orientation">
              <enum>Qt::Orientation::Horizontal</enum>
@@ -358,7 +364,7 @@
           <item alignment="Qt::AlignmentFlag::AlignHCenter">
            <widget class="QLabel" name="copiesInfo">
             <property name="text">
-             <string>copiesInfo</string>
+             <string>ℹ️ Max 50 labels per time and 100 per day</string>
             </property>
            </widget>
           </item>
