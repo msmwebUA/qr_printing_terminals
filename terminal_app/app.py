@@ -9,7 +9,7 @@ import gc
 
 # import UI
 from PySide6.QtWidgets import QMainWindow, QMessageBox, QApplication
-from PySide6.QtCore import Qt, QElapsedTimer
+from PySide6.QtCore import Qt, QElapsedTimer, QTimer, QDateTime
 from ui import Ui_MainWindow
 
 class App(QMainWindow, Ui_MainWindow):
@@ -17,14 +17,19 @@ class App(QMainWindow, Ui_MainWindow):
     super().__init__()
     self.setupUi(self)
 
-    # Full screen UI
+    # full screen UI
     self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
     self.showFullScreen()
-    # Hide cursor
+    # hide cursor
     self.setCursor(Qt.CursorShape.BlankCursor)
     # vars for exit from full screen mode
     self.click_count = 0
     self.click_timer = QElapsedTimer()
+
+    # clock
+    self.timer = QTimer(self)
+    self.timer.timeout.connect(self.updateClock)
+    self.timer.start(1000)
 
     # set first stackedWidget page
     self.stackedWidget.setCurrentIndex(0)
@@ -58,13 +63,13 @@ class App(QMainWindow, Ui_MainWindow):
 
     # Check number of clicks
     if self.click_count >= self.config.click_to_exit:
-        self.minimize_to_window()
+        self.minimizeToWindow()
         self.click_count = 0 # Скидаємо лічильник
 
     # Дозволяємо кнопкам всередині вікна працювати
     super().mousePressEvent(event)
 
-  def minimize_to_window(self):
+  def minimizeToWindow(self):
     # Show frame and controls
     self.setWindowFlags(Qt.WindowType.Window)
     # Show cursor
@@ -72,6 +77,12 @@ class App(QMainWindow, Ui_MainWindow):
     # Show in normal size
     self.showNormal() 
     self.activateWindow()
+
+  def update_clock(self):
+    now = QDateTime.currentDateTime()
+    time_text = now.toString("HH:mm:ss")
+    date_text = now.toString("dd.MM.yyyy")
+    self.dateTimeLabel.setText(f"🗓️ {date_text}  ⏰ {time_text}")
   
   def scan(self) -> None:
     self.stackedWidget.setCurrentIndex(1)
