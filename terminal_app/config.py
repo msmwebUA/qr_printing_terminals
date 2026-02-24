@@ -22,7 +22,8 @@ class Config():
       # but usb:// is the usual direct method for brother_ql.
     self.printer_model = "QL-700"
     self.printer_address = "usb://0x04f9:0x2042" # replace with your vendor:product from lsusb
-    self.printer_max_copies = 50
+    self.printer_max_copies_time = 50 # max copies per time
+    self.printer_max_copies_day = 100 # max copies per day
 
     # QR CODE
     self.qr_box_size = 3
