@@ -296,6 +296,13 @@
               </widget>
              </item>
              <item>
+              <widget class="QLabel" name="copiesLeft">
+               <property name="text">
+                <string>Copies left:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <spacer name="verticalSpacer_2">
                <property name="orientation">
                 <enum>Qt::Orientation::Vertical</enum>
@@ -452,7 +459,7 @@
      <x>0</x>
      <y>0</y>
      <width>640</width>
-     <height>30</height>
+     <height>29</height>
     </rect>
    </property>
   </widget>

@@ -46,9 +46,6 @@ class App(QMainWindow, Ui_MainWindow):
     if scan_feedback[0]:
       # assign emp_id variable
       self.emp_id = scan_feedback[1]
-      # set text to labels
-      self.empId.setText(f"EmpID: {self.emp_id}")
-      self.empName.setText("Employee: Unknown") 
       # set max copies
       copies_left = self.db.getCopiesLeft(self.emp_id)
       if copies_left > self.config.printer_max_copies_time:
@@ -56,7 +53,12 @@ class App(QMainWindow, Ui_MainWindow):
       elif copies_left > 0:
         self.copiesSlider.setMaximum(copies_left)
       else:
+        # show alert and go back to start
         self.showAlert("Validation", "No more copies left today", "critical")
+      # set text to labels
+      self.empId.setText(f"EmpID: {self.emp_id}")
+      self.empName.setText("Employee: Unknown") 
+      self.copiesLeft.setText(f"Copies left: {copies_left}")
       # move to next page
       self.stackedWidget.setCurrentIndex(2)
     else:
@@ -67,6 +69,8 @@ class App(QMainWindow, Ui_MainWindow):
       self.db.addLogEntry(0, 0, err)
 
   def print(self) -> None:
+    # make Print button disabled
+    self.printBtn.setEnabled(False)
     # create label and print objects
     label_obj = Label(self.config, self.db)
     print_obj = PrintLabel(self.config)
