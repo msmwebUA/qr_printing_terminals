@@ -102,7 +102,7 @@ class App(QMainWindow, Ui_MainWindow):
         self.copiesSlider.setMaximum(copies_left)
       else:
         # show alert and go back to start
-        self.showAlert("Validation", "No more copies left today", "critical")
+        self.showAlert("Validation", "Sorry, but no more copies left today", "critical")
       # set text to labels
       self.empId.setText(f"🆔 EmpID: {self.emp_id}")
       self.empName.setText("👷‍♂️ Employee: Unknown") 

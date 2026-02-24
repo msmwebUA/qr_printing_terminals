@@ -134,7 +134,7 @@ class Database:
     with closing(db.connect(self.config.db_file)) as connection:
       with connection:
         cursor = connection.cursor()
-        printed_copies = cursor.execute(f"SELECT COUNT(*) FROM {self.config.db_log_table} WHERE emp_id = ? AND timestamp > datetime('now', '-1 day') AND error_msg IS NULL", (emp_id,)).fetchone()[0]
+        printed_copies = cursor.execute(f"SELECT COALESCE(SUM(copies), 0) FROM {self.config.db_log_table} WHERE emp_id = ? AND timestamp > datetime('now', '-1 day') AND error_msg IS NULL", (emp_id,)).fetchone()[0]
     return day_limit - printed_copies
 
   def addDbLogEntry(self, e: str) -> None:
