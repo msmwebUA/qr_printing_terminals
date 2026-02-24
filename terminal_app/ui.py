@@ -32,20 +32,27 @@ class Ui_MainWindow(object):
 "}")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
+        self.verticalLayout = QVBoxLayout(self.centralwidget)
+        self.verticalLayout.setObjectName(u"verticalLayout")
         self.stackedWidget = QStackedWidget(self.centralwidget)
         self.stackedWidget.setObjectName(u"stackedWidget")
-        self.stackedWidget.setGeometry(QRect(0, 0, 641, 421))
         self.startPage = QWidget()
         self.startPage.setObjectName(u"startPage")
+        self.verticalLayout_2 = QVBoxLayout(self.startPage)
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.startFrame = QFrame(self.startPage)
         self.startFrame.setObjectName(u"startFrame")
-        self.startFrame.setGeometry(QRect(0, 20, 641, 411))
         self.startFrame.setFrameShape(QFrame.Shape.NoFrame)
         self.startFrame.setFrameShadow(QFrame.Shadow.Raised)
         self.verticalLayout_13 = QVBoxLayout(self.startFrame)
         self.verticalLayout_13.setObjectName(u"verticalLayout_13")
         self.dateTimeLabel = QLabel(self.startFrame)
         self.dateTimeLabel.setObjectName(u"dateTimeLabel")
+        font = QFont()
+        font.setPointSize(25)
+        font.setBold(True)
+        self.dateTimeLabel.setFont(font)
+        self.dateTimeLabel.setStyleSheet(u"color: rgb(4, 51, 255);")
         self.dateTimeLabel.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
 
         self.verticalLayout_13.addWidget(self.dateTimeLabel, 0, Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignVCenter)
@@ -75,12 +82,16 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_13.addItem(self.verticalSpacer_6)
 
+
+        self.verticalLayout_2.addWidget(self.startFrame)
+
         self.stackedWidget.addWidget(self.startPage)
         self.scanPage = QWidget()
         self.scanPage.setObjectName(u"scanPage")
+        self.verticalLayout_4 = QVBoxLayout(self.scanPage)
+        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
         self.scanFrame = QFrame(self.scanPage)
         self.scanFrame.setObjectName(u"scanFrame")
-        self.scanFrame.setGeometry(QRect(3, 15, 631, 411))
         self.scanFrame.setFrameShape(QFrame.Shape.NoFrame)
         self.scanFrame.setFrameShadow(QFrame.Shadow.Raised)
         self.verticalLayout_14 = QVBoxLayout(self.scanFrame)
@@ -91,9 +102,10 @@ class Ui_MainWindow(object):
 
         self.scanLabel = QLabel(self.scanFrame)
         self.scanLabel.setObjectName(u"scanLabel")
-        font = QFont()
-        font.setPointSize(40)
-        self.scanLabel.setFont(font)
+        font1 = QFont()
+        font1.setPointSize(50)
+        self.scanLabel.setFont(font1)
+        self.scanLabel.setStyleSheet(u"color: rgb(4, 51, 255)")
         self.scanLabel.setScaledContents(False)
 
         self.verticalLayout_14.addWidget(self.scanLabel, 0, Qt.AlignmentFlag.AlignHCenter|Qt.AlignmentFlag.AlignVCenter)
@@ -113,16 +125,23 @@ class Ui_MainWindow(object):
         self.cancelBtnScan.setObjectName(u"cancelBtnScan")
         self.cancelBtnScan.setMinimumSize(QSize(0, 50))
         self.cancelBtnScan.setMaximumSize(QSize(150, 16777215))
+        font2 = QFont()
+        font2.setPointSize(20)
+        self.cancelBtnScan.setFont(font2)
 
         self.verticalLayout_14.addWidget(self.cancelBtnScan, 0, Qt.AlignmentFlag.AlignHCenter)
+
+
+        self.verticalLayout_4.addWidget(self.scanFrame)
 
         self.stackedWidget.addWidget(self.scanPage)
         self.printPage = QWidget()
         self.printPage.setObjectName(u"printPage")
+        self.verticalLayout_3 = QVBoxLayout(self.printPage)
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.printFrame = QFrame(self.printPage)
         self.printFrame.setObjectName(u"printFrame")
         self.printFrame.setEnabled(True)
-        self.printFrame.setGeometry(QRect(6, 13, 631, 411))
         self.printFrame.setFrameShape(QFrame.Shape.NoFrame)
         self.printFrame.setFrameShadow(QFrame.Shadow.Raised)
         self.verticalLayout_10 = QVBoxLayout(self.printFrame)
@@ -135,6 +154,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
         self.printImg = QLabel(self.frame_1)
         self.printImg.setObjectName(u"printImg")
+        self.printImg.setMinimumSize(QSize(142, 142))
         self.printImg.setFrameShape(QFrame.Shape.NoFrame)
         self.printImg.setPixmap(QPixmap(u":/static/img/printer.png"))
 
@@ -153,13 +173,21 @@ class Ui_MainWindow(object):
 
         self.empName = QLabel(self.frame_2)
         self.empName.setObjectName(u"empName")
+        self.empName.setFont(font2)
 
         self.verticalLayout_11.addWidget(self.empName, 0, Qt.AlignmentFlag.AlignLeft)
 
         self.empId = QLabel(self.frame_2)
         self.empId.setObjectName(u"empId")
+        self.empId.setFont(font2)
 
         self.verticalLayout_11.addWidget(self.empId, 0, Qt.AlignmentFlag.AlignLeft)
+
+        self.copiesLeft = QLabel(self.frame_2)
+        self.copiesLeft.setObjectName(u"copiesLeft")
+        self.copiesLeft.setFont(font2)
+
+        self.verticalLayout_11.addWidget(self.copiesLeft)
 
         self.verticalSpacer_2 = QSpacerItem(20, 26, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
@@ -180,6 +208,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_12.setObjectName(u"verticalLayout_12")
         self.copiesValue = QLabel(self.frame_3)
         self.copiesValue.setObjectName(u"copiesValue")
+        self.copiesValue.setFont(font2)
 
         self.verticalLayout_12.addWidget(self.copiesValue, 0, Qt.AlignmentFlag.AlignHCenter)
 
@@ -198,6 +227,8 @@ class Ui_MainWindow(object):
 
         self.copiesInfo = QLabel(self.frame_3)
         self.copiesInfo.setObjectName(u"copiesInfo")
+        self.copiesInfo.setFont(font2)
+        self.copiesInfo.setStyleSheet(u"color: rgb(4, 51, 255);")
 
         self.verticalLayout_12.addWidget(self.copiesInfo, 0, Qt.AlignmentFlag.AlignHCenter)
 
@@ -217,6 +248,7 @@ class Ui_MainWindow(object):
         self.cancelBtnPrint = QPushButton(self.frame_4)
         self.cancelBtnPrint.setObjectName(u"cancelBtnPrint")
         self.cancelBtnPrint.setMinimumSize(QSize(0, 50))
+        self.cancelBtnPrint.setFont(font2)
 
         self.horizontalLayout_8.addWidget(self.cancelBtnPrint)
 
@@ -232,17 +264,25 @@ class Ui_MainWindow(object):
         sizePolicy1.setHeightForWidth(self.printBtn.sizePolicy().hasHeightForWidth())
         self.printBtn.setSizePolicy(sizePolicy1)
         self.printBtn.setMinimumSize(QSize(200, 0))
+        self.printBtn.setMaximumSize(QSize(16777215, 100))
+        self.printBtn.setFont(font2)
 
         self.horizontalLayout_8.addWidget(self.printBtn)
 
 
         self.verticalLayout_10.addWidget(self.frame_4)
 
+
+        self.verticalLayout_3.addWidget(self.printFrame)
+
         self.stackedWidget.addWidget(self.printPage)
+
+        self.verticalLayout.addWidget(self.stackedWidget)
+
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 640, 30))
+        self.menubar.setGeometry(QRect(0, 0, 640, 29))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
@@ -250,7 +290,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(2)
+        self.stackedWidget.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -266,6 +306,7 @@ class Ui_MainWindow(object):
         self.printImg.setText("")
         self.empName.setText(QCoreApplication.translate("MainWindow", u"Employee: ", None))
         self.empId.setText(QCoreApplication.translate("MainWindow", u"EmpID: ", None))
+        self.copiesLeft.setText(QCoreApplication.translate("MainWindow", u"Copies left:", None))
         self.copiesValue.setText(QCoreApplication.translate("MainWindow", u"Copies: 1", None))
         self.copiesInfo.setText(QCoreApplication.translate("MainWindow", u"\u2139\ufe0f Max 50 labels per time and 100 per day", None))
         self.cancelBtnPrint.setText(QCoreApplication.translate("MainWindow", u"\u274c Cancel", None))
