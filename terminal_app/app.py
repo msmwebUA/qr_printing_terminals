@@ -105,9 +105,10 @@ class App(QMainWindow, Ui_MainWindow):
         self.showAlert("Validation", "Sorry, but no more copies left today", "critical")
         return None # prevent further execution
       # set text to labels
-      self.empId.setText(f"🆔 EmpID: {self.emp_id}")
       self.empName.setText("👷‍♂️ Employee: Unknown") 
+      self.empId.setText(f"🆔 EmpID: {self.emp_id}")
       self.copiesLeft.setText(f"🏷️ Copies left: {copies_left}")
+      self.copiesValue.setText(f"📑 Copies: {self.copiesSlider.value()} (move slider to change)")
       # move to next page
       self.stackedWidget.setCurrentIndex(2)
     else:

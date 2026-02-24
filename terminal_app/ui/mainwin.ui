@@ -392,21 +392,6 @@
                 </property>
                </widget>
               </item>
-              <item alignment="Qt::AlignmentFlag::AlignHCenter">
-               <widget class="QLabel" name="copiesInfo">
-                <property name="font">
-                 <font>
-                  <pointsize>20</pointsize>
-                 </font>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(4, 51, 255);</string>
-                </property>
-                <property name="text">
-                 <string>ℹ️ Max 50 labels per time and 100 per day</string>
-                </property>
-               </widget>
-              </item>
              </layout>
             </widget>
            </item>
@@ -422,6 +407,21 @@
               </size>
              </property>
             </spacer>
+           </item>
+           <item alignment="Qt::AlignmentFlag::AlignHCenter">
+            <widget class="QLabel" name="copiesInfo">
+             <property name="font">
+              <font>
+               <pointsize>20</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(4, 51, 255);</string>
+             </property>
+             <property name="text">
+              <string>ℹ️ Max 50 labels per time and 100 per day</string>
+             </property>
+            </widget>
            </item>
            <item>
             <widget class="QFrame" name="frame_4">
