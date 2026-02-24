@@ -219,6 +219,10 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_12.addWidget(self.copiesValue, 0, Qt.AlignmentFlag.AlignHCenter)
 
+        self.verticalSpacer_9 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.verticalLayout_12.addItem(self.verticalSpacer_9)
+
         self.copiesSlider = QSlider(self.frame_3)
         self.copiesSlider.setObjectName(u"copiesSlider")
         self.copiesSlider.setMinimum(1)
