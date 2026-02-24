@@ -87,37 +87,63 @@ class Database:
           else:
             cursor.execute(params["query"], params["data"])
     except db.Error as e:
-      # Add database error to log file instead table
-      with open(self.config.db_error_log_file, "a") as f:
-        f.write(f"{datetime.now():%d.%m.%Y %H:%M:%S} - {e}\n")
-      print(f"Database error: {e}")
+      self.addDbLogEntry(e)
 
-  @staticmethod
-  def generateLabelData(config: object, data: dict) -> dict:
+  def generateLabelData(self, data: dict) -> dict:
     """
     Generates data for labels. Returns dict with emp_id as str in XXXX format and label_ids as list.
     
     Parameters:
-    config (object): application configuration
     data (dict): dictionary with data passed from label object
     
     Returns:
     dict: dictionary with emp_id and label_ids, or None if no free label IDs were found
     """
-    with closing(db.connect(config.db_file)) as connection:
+    try:
+      with closing(db.connect(self.config.db_file)) as connection:
+        with connection:
+          cursor = connection.cursor()
+          for i in range(data["copies"]):
+            exists = True
+            while exists:
+              label_id = randint(self.config.label_id_min, self.config.label_id_max)
+              db_label_id = int(f"{data['emp_id']}{label_id}")
+              # Check if label_id already exists in database
+              cursor.execute(f"SELECT 1 FROM {self.config.db_label_id_table} WHERE label_id = ?", (db_label_id,))
+              if not cursor.fetchone():
+                exists = False
+                data["label_ids"].append(str(label_id))
+      if data["label_ids"]:
+        return data
+      else:
+        return None
+    except db.Error as e:
+      self.addDbLogEntry(e)
+
+  def getCopiesLeft(self, emp_id: str) -> int:
+    """
+    Returns number of copies left for employee (for current day).
+    
+    Parameters:
+    emp_id (str): employee id
+    
+    Returns:
+    int: number of copies left
+    """
+    day_limit = self.config.printer_max_copies_day
+    with closing(db.connect(self.config.database_file)) as connection:
       with connection:
         cursor = connection.cursor()
-        for i in range(data["copies"]):
-          exists = True
-          while exists:
-            label_id = randint(config.label_id_min, config.label_id_max)
-            db_label_id = int(f"{data['emp_id']}{label_id}")
-            # Check if label_id already exists in database
-            cursor.execute(f"SELECT 1 FROM {config.db_label_id_table} WHERE label_id = ?", (db_label_id,))
-            if not cursor.fetchone():
-              exists = False
-              data["label_ids"].append(str(label_id))
-    if data["label_ids"]:
-      return data
-    else:
-      return None
+        printed_copies = cursor.execute(f"SELECT COUNT(*) FROM {self.config.db_log_table} WHERE emp_id = ? AND timestamp > datetime('now', '-1 day') AND error_msg IS NULL", (emp_id,)).fetchone()[0]
+    return day_limit - printed_copies
+
+  def addDbLogEntry(self, e: str) -> None:
+    """
+    Adds database error to log file instead table.
+    
+    Parameters:
+    e (str): error message
+    """
+    with open(self.config.db_error_log_file, "a") as f:
+      f.write(f"{datetime.now():%d.%m.%Y %H:%M:%S} - {e}\n")
+    print(f"Database error: {e}")
