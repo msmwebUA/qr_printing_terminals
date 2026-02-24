@@ -103,6 +103,7 @@ class App(QMainWindow, Ui_MainWindow):
       else:
         # show alert and go back to start
         self.showAlert("Validation", "Sorry, but no more copies left today", "critical")
+        return None # prevent further execution
       # set text to labels
       self.empId.setText(f"🆔 EmpID: {self.emp_id}")
       self.empName.setText("👷‍♂️ Employee: Unknown") 
@@ -111,10 +112,10 @@ class App(QMainWindow, Ui_MainWindow):
       self.stackedWidget.setCurrentIndex(2)
     else:
       err = str(scan_feedback[1])
-      # show error dialog
-      self.showAlert("Scan Error", err, "critical")
       # add log entry to db
       self.db.addLogEntry(0, 0, err)
+      # show error dialog
+      self.showAlert("Scan Error", err, "critical")
 
   def print(self) -> None:
     # make Print button disabled
