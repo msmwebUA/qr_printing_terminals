@@ -395,26 +395,33 @@
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
-                  <height>30</height>
+                  <height>60</height>
                  </size>
                 </property>
                 <property name="styleSheet">
                  <string notr="true">/* Збільшуємо сам бігунок */
 QSlider::handle:horizontal {
     background: #0078d7; /* Колір бігунка */
-    width: 30px;         /* Ширина для зручного тапу */
-    height: 30px;        /* Висота */
-    margin: -10px 0;     /* Висуваємо його за межі тонкої лінії */
-    border-radius: 15px; /* Робимо його круглим */
+    width: 60px;         /* Ширина для зручного тапу */
+    height: 60px;        /* Висота */
+    margin: -22px 0;     /* Висуваємо його за межі тонкої лінії */
+    border-radius: 30px; /* Робимо його круглим */
 }
 
 /* Робимо лінію (канавку) товстішою */
 QSlider::groove:horizontal {
-    border: 1px solid #999999;
-    height: 10px;        /* Товщина лінії */
+    border: 2px solid #999999;
+    height: 20px;        /* Товщина лінії */
     background: #cccccc;
-    margin: 2px 0;
-    border-radius: 5px;
+    margin: 4px 0;
+    border-radius: 10px;
+}
+
+/* Колір заповненої частини (ліворуч від бігунка) */
+QSlider::sub-page:horizontal {
+    background: #2196F3;
+    height: 20px;
+    border-radius: 10px;
 }</string>
                 </property>
                 <property name="minimum">

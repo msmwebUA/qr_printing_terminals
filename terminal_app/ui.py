@@ -225,24 +225,31 @@ class Ui_MainWindow(object):
 
         self.copiesSlider = QSlider(self.frame_3)
         self.copiesSlider.setObjectName(u"copiesSlider")
-        self.copiesSlider.setMinimumSize(QSize(0, 30))
+        self.copiesSlider.setMinimumSize(QSize(0, 60))
         self.copiesSlider.setStyleSheet(u"/* \u0417\u0431\u0456\u043b\u044c\u0448\u0443\u0454\u043c\u043e \u0441\u0430\u043c \u0431\u0456\u0433\u0443\u043d\u043e\u043a */\n"
 "QSlider::handle:horizontal {\n"
 "    background: #0078d7; /* \u041a\u043e\u043b\u0456\u0440 \u0431\u0456\u0433\u0443\u043d\u043a\u0430 */\n"
-"    width: 30px;         /* \u0428\u0438\u0440\u0438\u043d\u0430 \u0434\u043b\u044f \u0437\u0440\u0443\u0447\u043d\u043e\u0433\u043e \u0442\u0430\u043f\u0443 */\n"
-"    height: 30px;        /* \u0412\u0438\u0441\u043e\u0442\u0430 */\n"
-"    margin: -10px 0;     /* \u0412\u0438\u0441\u0443\u0432\u0430\u0454\u043c\u043e \u0439\u043e\u0433\u043e \u0437\u0430 \u043c\u0435\u0436\u0456 \u0442\u043e\u043d\u043a\u043e\u0457 \u043b\u0456\u043d\u0456\u0457 */\n"
-"    border-radius: 15px; /* \u0420\u043e\u0431\u0438\u043c\u043e \u0439\u043e\u0433\u043e \u043a\u0440\u0443\u0433\u043b\u0438\u043c */\n"
+"    width: 60px;         /* \u0428\u0438\u0440\u0438\u043d\u0430 \u0434\u043b\u044f \u0437\u0440\u0443\u0447\u043d\u043e\u0433\u043e \u0442\u0430\u043f\u0443 */\n"
+"    height: 60px;        /* \u0412\u0438\u0441\u043e\u0442\u0430 */\n"
+"    margin: -22px 0;     /* \u0412\u0438\u0441\u0443\u0432\u0430\u0454\u043c\u043e \u0439\u043e\u0433\u043e \u0437\u0430 \u043c\u0435\u0436\u0456 \u0442\u043e\u043d\u043a\u043e\u0457 \u043b\u0456\u043d\u0456\u0457 */\n"
+"    border-radius: 30px; /* \u0420\u043e\u0431\u0438\u043c\u043e \u0439\u043e\u0433\u043e \u043a\u0440\u0443\u0433\u043b\u0438\u043c */\n"
 "}\n"
 "\n"
 "/* \u0420\u043e\u0431\u0438\u043c\u043e \u043b\u0456\u043d\u0456\u044e (\u043a\u0430\u043d\u0430\u0432\u043a\u0443) \u0442\u043e\u0432\u0441\u0442"
                         "\u0456\u0448\u043e\u044e */\n"
 "QSlider::groove:horizontal {\n"
-"    border: 1px solid #999999;\n"
-"    height: 10px;        /* \u0422\u043e\u0432\u0449\u0438\u043d\u0430 \u043b\u0456\u043d\u0456\u0457 */\n"
+"    border: 2px solid #999999;\n"
+"    height: 20px;        /* \u0422\u043e\u0432\u0449\u0438\u043d\u0430 \u043b\u0456\u043d\u0456\u0457 */\n"
 "    background: #cccccc;\n"
-"    margin: 2px 0;\n"
-"    border-radius: 5px;\n"
+"    margin: 4px 0;\n"
+"    border-radius: 10px;\n"
+"}\n"
+"\n"
+"/* \u041a\u043e\u043b\u0456\u0440 \u0437\u0430\u043f\u043e\u0432\u043d\u0435\u043d\u043e\u0457 \u0447\u0430\u0441\u0442\u0438\u043d\u0438 (\u043b\u0456\u0432\u043e\u0440\u0443\u0447 \u0432\u0456\u0434 \u0431\u0456\u0433\u0443\u043d\u043a\u0430) */\n"
+"QSlider::sub-page:horizontal {\n"
+"    background: #2196F3;\n"
+"    height: 20px;\n"
+"    border-radius: 10px;\n"
 "}")
         self.copiesSlider.setMinimum(1)
         self.copiesSlider.setMaximum(50)
