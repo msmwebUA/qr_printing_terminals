@@ -10,6 +10,9 @@ class Config():
     # GENERAL
     # main directory
     main_dir = Path(__file__).parent
+    # exit from full screen mode
+    self.click_to_exit = 5
+    self.click_timeout = 2000 # ms
 
     # SCANNING
     # max scan times per read action

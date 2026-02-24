@@ -9,12 +9,22 @@ import gc
 
 # import UI
 from PySide6.QtWidgets import QMainWindow, QMessageBox, QApplication
+from PySide6.QtCore import Qt, QElapsedTimer
 from ui import Ui_MainWindow
 
 class App(QMainWindow, Ui_MainWindow):
   def __init__(self):
     super().__init__()
     self.setupUi(self)
+
+    # Full screen UI
+    self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
+    self.showFullScreen()
+    # Hide cursor
+    self.setCursor(Qt.CursorShape.BlankCursor)
+    # vars for exit from full screen mode
+    self.click_count = 0
+    self.click_timer = QElapsedTimer()
 
     # set first stackedWidget page
     self.stackedWidget.setCurrentIndex(0)
@@ -29,12 +39,39 @@ class App(QMainWindow, Ui_MainWindow):
     self.copiesSlider.valueChanged.connect(
       lambda value: self.copiesValue.setText(f"Copies: {value}")
     )
+    # Info label about limits of copies
+    self.copiesInfo.setText(f"ℹ️  Max {self.config.printer_max_copies_time} labels per time and {self.config.printer_max_copies_day} per day")
 
     # init configuration 
     self.config = Config()
 
     # init database
     self.db = Database(self.config)
+  
+  def mousePressEvent(self, event):
+    # Count clicks (reset, if > 2 sec)
+    if self.click_count == 0 or self.click_timer.elapsed() > self.config.click_timeout:
+        self.click_count = 1
+        self.click_timer.start()
+    else:
+        self.click_count += 1
+
+    # Check number of clicks
+    if self.click_count >= self.config.click_to_exit:
+        self.minimize_to_window()
+        self.click_count = 0 # Скидаємо лічильник
+
+    # Дозволяємо кнопкам всередині вікна працювати
+    super().mousePressEvent(event)
+
+  def minimize_to_window(self):
+    # Show frame and controls
+    self.setWindowFlags(Qt.WindowType.Window)
+    # Show cursor
+    self.unsetCursor() 
+    # Show in normal size
+    self.showNormal() 
+    self.activateWindow()
   
   def scan(self) -> None:
     self.stackedWidget.setCurrentIndex(1)
@@ -56,9 +93,9 @@ class App(QMainWindow, Ui_MainWindow):
         # show alert and go back to start
         self.showAlert("Validation", "No more copies left today", "critical")
       # set text to labels
-      self.empId.setText(f"EmpID: {self.emp_id}")
-      self.empName.setText("Employee: Unknown") 
-      self.copiesLeft.setText(f"Copies left: {copies_left}")
+      self.empId.setText(f"🆔 EmpID: {self.emp_id}")
+      self.empName.setText("👷‍♂️ Employee: Unknown") 
+      self.copiesLeft.setText(f"🏷️ Copies left: {copies_left}")
       # move to next page
       self.stackedWidget.setCurrentIndex(2)
     else:
