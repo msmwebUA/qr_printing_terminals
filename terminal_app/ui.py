@@ -206,6 +206,10 @@ class Ui_MainWindow(object):
         self.frame_3.setLineWidth(3)
         self.verticalLayout_12 = QVBoxLayout(self.frame_3)
         self.verticalLayout_12.setObjectName(u"verticalLayout_12")
+        self.verticalSpacer_8 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.verticalLayout_12.addItem(self.verticalSpacer_8)
+
         self.copiesValue = QLabel(self.frame_3)
         self.copiesValue.setObjectName(u"copiesValue")
         font3 = QFont()
@@ -227,6 +231,10 @@ class Ui_MainWindow(object):
         self.copiesSlider.setTickInterval(5)
 
         self.verticalLayout_12.addWidget(self.copiesSlider)
+
+        self.verticalSpacer_7 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.verticalLayout_12.addItem(self.verticalSpacer_7)
 
 
         self.verticalLayout_10.addWidget(self.frame_3)
