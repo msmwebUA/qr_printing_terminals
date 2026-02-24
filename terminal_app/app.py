@@ -16,6 +16,9 @@ class App(QMainWindow, Ui_MainWindow):
   def __init__(self):
     super().__init__()
     self.setupUi(self)
+    
+    # init configuration 
+    self.config = Config()
 
     # full screen UI
     self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
@@ -47,9 +50,6 @@ class App(QMainWindow, Ui_MainWindow):
     # Info label about limits of copies
     self.copiesInfo.setText(f"ℹ️  Max {self.config.printer_max_copies_time} labels per time and {self.config.printer_max_copies_day} per day")
 
-    # init configuration 
-    self.config = Config()
-
     # init database
     self.db = Database(self.config)
   
@@ -78,7 +78,7 @@ class App(QMainWindow, Ui_MainWindow):
     self.showNormal() 
     self.activateWindow()
 
-  def update_clock(self):
+  def updateClock(self):
     now = QDateTime.currentDateTime()
     time_text = now.toString("HH:mm:ss")
     date_text = now.toString("dd.MM.yyyy")
@@ -176,4 +176,6 @@ class App(QMainWindow, Ui_MainWindow):
     self.copiesSlider.setValue(1)
     self.empName.setText("Unknown employee")
     self.empId.setText("EmpID is not set")
+    self.copiesLeft.setText("Copies left: ?")
+    self.printBtn.setEnabled(True)
     gc.collect()

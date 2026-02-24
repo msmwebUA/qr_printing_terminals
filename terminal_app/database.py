@@ -131,7 +131,7 @@ class Database:
     int: number of copies left
     """
     day_limit = self.config.printer_max_copies_day
-    with closing(db.connect(self.config.database_file)) as connection:
+    with closing(db.connect(self.config.db_file)) as connection:
       with connection:
         cursor = connection.cursor()
         printed_copies = cursor.execute(f"SELECT COUNT(*) FROM {self.config.db_log_table} WHERE emp_id = ? AND timestamp > datetime('now', '-1 day') AND error_msg IS NULL", (emp_id,)).fetchone()[0]
