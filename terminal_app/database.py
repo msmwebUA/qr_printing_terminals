@@ -35,6 +35,11 @@ class Database:
       "many": False,
       "data": ()
     })
+    self.execute({
+      "query": f'CREATE INDEX IF NOT EXISTS {self.config.db_log_table}_index ON {self.config.db_log_table} ("emp_id")',
+      "many": False,
+      "data": ()
+    })
 
   def addLogEntry(self, emp_id: str, copies: str, error_msg: str) -> None:
     """
