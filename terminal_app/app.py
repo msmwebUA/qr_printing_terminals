@@ -60,7 +60,7 @@ class App(QMainWindow, Ui_MainWindow):
 
   def print(self) -> None:
     # create label and print objects
-    label_obj = Label(self.config)
+    label_obj = Label(self.config, self.db)
     print_obj = PrintLabel(self.config)
     copies = self.copiesSlider.value()
     # create and print labels

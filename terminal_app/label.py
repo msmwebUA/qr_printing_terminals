@@ -3,13 +3,13 @@
 from PIL import Image, ImageDraw, ImageFont
 import qrcode
 from random import randint
-from database import Database
 from pathlib import Path
 
 class Label:
 
-    def __init__(self, config: object):
+    def __init__(self, config: object, db: object):
         self.config = config
+        self._db = db
 
     def create(self, emp_id: str, copies: int) -> list:
         """
@@ -100,7 +100,7 @@ class Label:
             }
         # generate data with database check
         if self.config.label_id_check:
-            return Database.generateLabelData(self.config, data)
+            return self._db.generateLabelData(data)
         # without database check
         else:
             for i in range(copies):
