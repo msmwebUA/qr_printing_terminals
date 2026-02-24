@@ -45,7 +45,7 @@ class App(QMainWindow, Ui_MainWindow):
 
     # update copies value
     self.copiesSlider.valueChanged.connect(
-      lambda value: self.copiesValue.setText(f"Copies: {value}")
+      lambda value: self.copiesValue.setText(f"📑 Copies: {value} (move slider to change)")
     )
     # Info label about limits of copies
     self.copiesInfo.setText(f"ℹ️  Max {self.config.printer_max_copies_time} labels per time and {self.config.printer_max_copies_day} per day")

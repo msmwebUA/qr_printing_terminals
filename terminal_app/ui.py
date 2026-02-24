@@ -25,7 +25,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(640, 480)
+        MainWindow.resize(640, 532)
         MainWindow.setAutoFillBackground(False)
         MainWindow.setStyleSheet(u"QMainWindow {\n"
 "    background-color: white;\n"
@@ -208,7 +208,10 @@ class Ui_MainWindow(object):
         self.verticalLayout_12.setObjectName(u"verticalLayout_12")
         self.copiesValue = QLabel(self.frame_3)
         self.copiesValue.setObjectName(u"copiesValue")
-        self.copiesValue.setFont(font2)
+        font3 = QFont()
+        font3.setPointSize(20)
+        font3.setBold(True)
+        self.copiesValue.setFont(font3)
 
         self.verticalLayout_12.addWidget(self.copiesValue, 0, Qt.AlignmentFlag.AlignHCenter)
 
@@ -290,7 +293,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(0)
+        self.stackedWidget.setCurrentIndex(2)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
