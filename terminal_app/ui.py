@@ -228,19 +228,19 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_12.addWidget(self.copiesSlider)
 
-        self.copiesInfo = QLabel(self.frame_3)
-        self.copiesInfo.setObjectName(u"copiesInfo")
-        self.copiesInfo.setFont(font2)
-        self.copiesInfo.setStyleSheet(u"color: rgb(4, 51, 255);")
-
-        self.verticalLayout_12.addWidget(self.copiesInfo, 0, Qt.AlignmentFlag.AlignHCenter)
-
 
         self.verticalLayout_10.addWidget(self.frame_3)
 
         self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_10.addItem(self.verticalSpacer)
+
+        self.copiesInfo = QLabel(self.printFrame)
+        self.copiesInfo.setObjectName(u"copiesInfo")
+        self.copiesInfo.setFont(font2)
+        self.copiesInfo.setStyleSheet(u"color: rgb(4, 51, 255);")
+
+        self.verticalLayout_10.addWidget(self.copiesInfo, 0, Qt.AlignmentFlag.AlignHCenter)
 
         self.frame_4 = QFrame(self.printFrame)
         self.frame_4.setObjectName(u"frame_4")
