@@ -49,6 +49,14 @@ class App(QMainWindow, Ui_MainWindow):
       # set text to labels
       self.empId.setText(f"EmpID: {self.emp_id}")
       self.empName.setText("Employee: Unknown") 
+      # set max copies
+      copies_left = self.db.getCopiesLeft(self.emp_id)
+      if copies_left > self.config.printer_max_copies_time:
+        self.copiesSlider.setMaximum(self.config.printer_max_copies_time)
+      elif copies_left > 0:
+        self.copiesSlider.setMaximum(copies_left)
+      else:
+        self.showAlert("Validation", "No more copies left today", "critical")
       # move to next page
       self.stackedWidget.setCurrentIndex(2)
     else:
