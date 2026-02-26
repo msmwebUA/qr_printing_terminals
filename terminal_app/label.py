@@ -70,9 +70,10 @@ class Label:
                     w = bbox[2] - bbox[0]
                     h = bbox[3] - bbox[1]
 
-                    # Position text at bottom with padding
-                    y_text = label_size[1] - padding - h
-                    draw.text(((label_size[0] - w)//2, y_text), label_text, fill="black", font=font)
+                    # Position text
+                    x_text = label_size[0] // 2
+                    y_text = label_size[1] - padding
+                    draw.text((x_text, y_text), label_text, fill="black", font=font, anchor="ms")
 
                     # Save
                     fname = f"{self.config.label_file}-{i}{self.config.label_file_extension}"
