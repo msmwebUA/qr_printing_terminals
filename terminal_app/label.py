@@ -3,7 +3,6 @@
 from PIL import Image, ImageDraw, ImageFont
 import qrcode
 from random import randint
-from pathlib import Path
 
 class Label:
 
@@ -13,18 +12,18 @@ class Label:
 
     def create(self, emp_id: str, copies: int) -> list:
         """
-        Create label file as PNG. Parameter data is dictionary with emp_id and label_id. 
+        Create a label image with a QR code and text at the bottom.
         
-        Return list with 2 elements: 
+        Parameters:
+        emp_id (str): employee id
+        copies (int): number of copies to generate
+        
+        Returns:
+        list: list with 2 elements, 
         list[0] is result code (0 - error, 1 - success), 
-        list[1] is dict of label data or error message
+        list[1] is error message or generated labels data for database processing
         """
         try:
-            # Clear directory with label files
-            for file in Path(self.config.label_path).iterdir():
-                if file.is_file():
-                    file.unlink()
-
             # Get data for QR and label text
             data = self.generateData(emp_id, copies)
             if data:
@@ -38,11 +37,11 @@ class Label:
                     qr = qrcode.QRCode(error_correction=qrcode.constants.ERROR_CORRECT_M, box_size=self.config.qr_box_size, border=self.config.qr_border)
                     qr.add_data(qr_data)
                     qr.make(fit=self.config.qr_fit)
-                    qr_img = qr.make_image(fill_color="black", back_color="white").convert("RGB")
+                    qr_img = qr.make_image(fill_color="black", back_color="white").convert("1")
 
                     # Canvas
                     label_size = self.config.label_size
-                    img = Image.new("RGB", label_size, "white")
+                    img = Image.new("1", label_size, 1) # 1 = white
                     draw = ImageDraw.Draw(img)
 
                     # Calculate sizes
@@ -73,12 +72,10 @@ class Label:
                     # Position text
                     x_text = label_size[0] // 2
                     y_text = label_size[1] - padding
-                    draw.text((x_text, y_text), label_text, fill="black", font=font, anchor="ms")
+                    draw.text((x_text, y_text), label_text, fill=0, font=font, anchor="ms")
 
-                    # Save
-                    fname = f"{self.config.label_file}-{i}{self.config.label_file_extension}"
-                    img.save(fname)
-                    data["label_files"].append(fname)
+                    # Append label image
+                    data["label_images"].append(img)
                     
                 return [1, data]
             else:
@@ -87,12 +84,17 @@ class Label:
             return [0, e]
                
     def generateData(self, emp_id: str, copies: int) -> dict:
-        """
-        Generate data for labels. 
-        
-        Return dict with emp_id as str in XXXX format and label_ids as list.
-        """
         # add trealing zeros to emp_id
+        """
+        Generates data for labels.
+
+        Parameters:
+        emp_id (str): employee id
+        copies (int): number of copies
+        
+        Returns:
+        dict: dictionary with emp_id, copies, label_ids and label_images
+        """
         while len(emp_id) < 4:
             emp_id = "0" + emp_id
         # init data
@@ -100,7 +102,7 @@ class Label:
                 "emp_id": emp_id, # str in XXXX format
                 "copies": copies,
                 "label_ids": [],
-                "label_files": []
+                "label_images": []
             }
         # generate data with database check
         if self.config.label_id_check:

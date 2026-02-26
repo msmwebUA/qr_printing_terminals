@@ -5,15 +5,23 @@ from brother_ql.conversion import convert
 from brother_ql.backends.helpers import send
 
 class PrintLabel:
-  def __init__(self, config: object):
+  def __init__(self, config: object) -> None:
     self.config = config
+    self.qlr = BrotherQLRaster(self.config.printer_model)
 
   def print(self, label_obj: object, emp_id: str, copies: int,) -> list:
     """
-    Convert label file and send to printer. Parameter copies is number of copies.
-    Return list with 2 elements: 
+    Print labels.
+
+    Parameters:
+    label_obj (object): label object
+    emp_id (str): employee id
+    copies (int): number of copies to print
+
+    Returns:
+    list: list with 2 elements, 
     list[0] is result code (0 - error, 1 - success), 
-    list[1] is empty string or error message
+    list[1] is error message or generated labels data for database processing
     """
     try:
 
@@ -24,10 +32,9 @@ class PrintLabel:
       label_feedback = label_obj.create(emp_id, copies)
       if label_feedback[0] == 1:
         # convert and send data to printer
-        qlr = BrotherQLRaster(self.config.printer_model)
         instructions = convert(
-            qlr = qlr,
-            images = label_feedback[1]["label_files"],
+            qlr = self.qlr,
+            images = label_feedback[1]["label_images"],
             label = self.config.label_type,
             rotate = '0',
             cut = False
@@ -37,7 +44,7 @@ class PrintLabel:
         if status["did_print"]:
           return [1, label_feedback[1]]
         else:
-          raise RuntimeError("Response from printer: Failed to print label")
+          raise RuntimeError("Printer responded but did not print")
       else:
         # return error message received from label object
         return [0, "Failed to create label: " + label_feedback[1]]
@@ -47,7 +54,10 @@ class PrintLabel:
 
   def getCopies(self) -> int:
     """
-    Asks user for number of copies, validates that input is an integer and returns the value.
+    Asks user for number of copies to print. Will keep asking until a valid integer between 1 and max_copies is entered.
+
+    Returns:
+      int: number of copies to print
     """
     max_copies = self.config.printer_max_copies
     while True:
