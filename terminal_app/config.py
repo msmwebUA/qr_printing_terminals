@@ -14,7 +14,7 @@ class Config():
     self.click_to_exit = 7
     self.click_timeout = 2000 # ms
     # dialog autoclose
-    self.alert_timeout = 10000 # ms
+    self.alert_timeout = 15000 # ms
 
     # SCANNING
     # scan timeout
