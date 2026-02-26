@@ -18,7 +18,6 @@ class ScanCard():
     list[0] is result code (0 - error, 1 - success), 
     list[1] is error message or text from card
     """
-    counter = 0
     start_time = time.time()
     try:
       reader = SimpleMFRC522()
@@ -29,10 +28,6 @@ class ScanCard():
         id, text = reader.read_no_block()
         if (id and text):
           return [1, text.strip()]
-        counter += 1
-        # limit false scans
-        if counter > self.config.max_scans:
-          raise Exception("Exceeded limit of false scans")
         # small delay between scans to prevent CPU overload
         time.sleep(0.01)
     except Exception as e:
