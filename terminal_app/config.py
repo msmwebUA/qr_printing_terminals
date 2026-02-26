@@ -36,8 +36,8 @@ class Config():
 
     # LABEL IMAGE
     self.label_type = "23x23" # 23mm square labels
-    self.label_size = (272, 202) # Brother printable area for 23mm roll is 202x202 px
-    self.label_padding = 8  # px
+    self.label_size = (202, 202) # Brother printable area for 23mm roll is 202x202 px
+    self.label_padding = 5  # px
     self.label_text_height = 30  # reserve space for text at bottom
     self.label_gap = 5  # small gap between QR and text
     self.label_font_path = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
