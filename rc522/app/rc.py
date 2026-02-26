@@ -2,9 +2,6 @@ from sys import exit
 from readwrite_lib import Rfid
 from app_vars import AppVariables
 
-# Init global vars
-app_vars = AppVariables()
-
 def main():
     print("\nRead/Write tool for RC522")
     while True:
@@ -16,15 +13,18 @@ def main():
             Rfid.read()
         elif mode == 2:
             Rfid.write()
+        elif mode == 3:
+            Rfid.writeIdRange()
         else:
             print("Something wrong. Reboot app.")
             exit(-1)
 
 def printMenu():
     print("""
-Choose option (1, 2 or 0)
+Choose option:
 1 - Read RFID card
 2 - Write to RFID card
+3 - Write ID range
 0 - Exit
 """)
 
@@ -34,7 +34,7 @@ def getOption() -> int:
         choice = input("Your choice: ").strip()
         try:
             choice = int(choice)
-            if choice not in range(app_vars.options_num):
+            if choice not in range(4):
                 print("Invalid option! Try again...")
             else:
                 return choice

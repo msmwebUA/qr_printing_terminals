@@ -3,7 +3,7 @@ import RPi.GPIO as GPIO
 
 class Rfid():
   @staticmethod
-  def read():
+  def read() -> None:
     reader = SimpleMFRC522()
     try:
         print("Scan your card or press Ctrl+C for exit from scan mode:")
@@ -16,7 +16,7 @@ class Rfid():
         GPIO.cleanup()
 
   @staticmethod
-  def write():
+  def write() -> None:
     reader = SimpleMFRC522()
     try:
       text = Rfid.getText()
@@ -25,6 +25,23 @@ class Rfid():
       print("Text written successfully!")
     except Exception as e:
       print(f"Cannot write text: {e}")
+    finally:
+      GPIO.cleanup()
+  
+  @staticmethod
+  def writeIdRange() -> None:
+    reader = SimpleMFRC522()
+    try:
+      range_from, range_to = Rfid.getIdRange()
+      for id in range(range_from, range_to + 1):
+        text = str(id)
+        print(f"Place RFID card near reader to write ID {id}...")
+        reader.write(text)
+        print(f"ID {id} written successfully!")
+        print("Switching to next ID...")
+      print(f"All IDs in range {range_from}-{range_to} written successfully!")
+    except Exception as e:
+      print(f"Cannot write to card: {e}")
     finally:
       GPIO.cleanup()
 
@@ -37,3 +54,19 @@ class Rfid():
         print(f"Max 49 chars allowed. Your text is {length} chars. Try again...")
       else:
         return text
+  
+  @staticmethod
+  def getIdRange() -> tuple[int, int]:
+    while True:
+      range_from = input("Input ID to start with: ").strip()
+      range_to = input("Input ID to end with: ").strip()
+      try:
+        range_from = int(range_from)
+        range_to = int(range_to)
+      except ValueError:
+        print("Your input is not an integer! Try again...")
+        continue
+      if range_from > range_to:
+        print("ID range is invalid. Try again...")
+      else:
+        return (range_from, range_to)
