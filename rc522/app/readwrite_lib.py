@@ -38,7 +38,8 @@ class Rfid():
         print(f"Place RFID card near reader to write ID {id}...")
         reader.write(text)
         print(f"ID {id} written successfully!")
-        print("Switching to next ID...")
+        if id != range_to:
+          print("Switching to next ID...")
       print(f"All IDs in range {range_from}-{range_to} written successfully!")
     except Exception as e:
       print(f"Cannot write to card: {e}")
@@ -67,6 +68,6 @@ class Rfid():
         print("Your input is not an integer! Try again...")
         continue
       if range_from > range_to:
-        print("ID range is invalid. Try again...")
+        print("ID from is greater than ID to. Try again...")
       else:
         return (range_from, range_to)
