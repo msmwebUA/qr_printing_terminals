@@ -39,9 +39,9 @@ class Rfid():
         reader.write(text)
         print(f"ID {id} written successfully!")
         if id != range_to:
-          input("Move card away from scanner and press Enter to continue")
-          print("Switching to next ID...")
-      print(f"All IDs in range {range_from}-{range_to} written successfully!")
+          input("Move card away from reader and press Enter to continue")
+          print("\nSwitching to next ID...")
+      print(f"\nAll IDs in range {range_from}-{range_to} written successfully!")
     except Exception as e:
       print(f"Cannot write to card: {e}")
     finally:
