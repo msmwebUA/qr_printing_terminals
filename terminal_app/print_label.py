@@ -30,7 +30,8 @@ class PrintLabel:
             images = label_feedback[1]["label_files"],
             label = self.config.label_type,
             rotate = '0',
-            cut = False
+            cut = False,
+            left_margin = 0
           )
         status = send(instructions, self.config.printer_address)
         # return "success" and generated labels data for database processing
