@@ -1,12 +1,48 @@
-Wareshare touchscreen config
+# Wareshare Touchscreen Config
 
-1. Open rpi config file
+## 1. Open RPI Config File
+```bash
+sudo nano /boot/firmware/config.txt
+```
 
-  sudo nano /boot/firmware/config.txt
+Add to the end of file:
+```
+dtoverlay=vc4-kms-dsi-waveshare-panel,10_1_inch,dsi0
+```
 
-  # Add to the end of file
-  dtoverlay=vc4-kms-dsi-waveshare-panel,10_1_inch,dsi0
+## 2. Save File
 
-2. Save file
+## 3. Reboot
 
-3. Reboot
+## 4. Disable Screen Saver
+
+Menu → Preferences → Control Centre → Display → turn on Screen Blanking (10 min as default)
+
+### Change Default Timeout
+```bash
+nano ~/.config/labwc/autostart
+```
+
+Edit this option:
+```
+timeout 600
+```
+(time in seconds)
+
+## 5. Set Brightness and Turn on Multitouch Mode
+
+Menu → Preferences → Control Centre → Screens → Screens → DSI-1 → Brightness
+
+DSI-1 → Touchscreen → Mode (for multitouch configuration)
+
+Also enable **10-0014 Goodix Touchscreen** in the same Touchscreen Menu
+
+## 6. Enable Single Click to Open Directories
+
+To open directories with one touch (click) instead of two, change the settings of the file manager:
+
+1. Open the file manager (folder icon in the upper left)
+2. In the top menu, select **Edit → Preferences**
+3. On the **General** tab, find the **Behavior** section
+4. Turn on **Open files with single click**
+5. Click **Close**
