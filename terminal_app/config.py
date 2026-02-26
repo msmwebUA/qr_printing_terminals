@@ -17,6 +17,7 @@ class Config():
     # SCANNING
     # max scan times per read action
     self.max_scans = 30
+    self.scan_timeout = 20 # seconds
 
     # PRINTER
       # brother_ql commonly accepts a URI like:

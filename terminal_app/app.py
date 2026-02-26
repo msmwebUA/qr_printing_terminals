@@ -43,6 +43,9 @@ class App(QMainWindow, Ui_MainWindow):
     self.cancelBtnScan.clicked.connect(self.cancel)
     self.cancelBtnPrint.clicked.connect(self.cancel)
 
+    # make cancel button on scan page unvisible (use timers for scan instead)
+    self.cancelBtnScan.setVisible(False)
+
     # update copies value
     self.copiesSlider.valueChanged.connect(
       lambda value: self.copiesValue.setText(f"📑 Copies: {value} (move slider to change)")
