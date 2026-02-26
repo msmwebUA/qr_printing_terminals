@@ -70,7 +70,7 @@ class App(QMainWindow, Ui_MainWindow):
     # Allow the parent class to handle the event
     super().mousePressEvent(event)
 
-  def minimizeToWindow(self):
+  def minimizeToWindow(self) -> None:
     # Show frame and controls
     self.setWindowFlags(Qt.WindowType.Window)
     # Show cursor
@@ -79,7 +79,7 @@ class App(QMainWindow, Ui_MainWindow):
     self.showNormal() 
     self.activateWindow()
 
-  def updateClock(self):
+  def updateClock(self) -> None:
     now = QDateTime.currentDateTime()
     time_text = now.toString("HH:mm:ss")
     date_text = now.toString("dd.MM.yyyy")
@@ -160,20 +160,26 @@ class App(QMainWindow, Ui_MainWindow):
     self.clearData()
 
   def showAlert(self, title: str, text: str, alert_type: str) -> None:
+    alert = QMessageBox(self)
+    alert.setWindowTitle(title)
+    alert.setText(text)
     if alert_type == "info":
-      QMessageBox.information(self,title, text)
+        alert.setIcon(QMessageBox.Icon.Information)
     elif alert_type == "warning":
-      QMessageBox.warning(self, title, text)
+        alert.setIcon(QMessageBox.Icon.Warning)
     elif alert_type == "critical":
-      QMessageBox.critical(self, title, text)
+        alert.setIcon(QMessageBox.Icon.Critical)
     else:
-      QMessageBox.information(self, title, text)
-    # go back to start page (user clicked OK or X in modal dialog)
+        alert.setIcon(QMessageBox.Icon.Information)
+    alert.setStandardButtons(QMessageBox.StandardButton.Ok)
+    # Auto close
+    QTimer.singleShot(self.config.alert_timeout, alert.accept)
+    alert.exec()
+    # After dialog closes
     self.stackedWidget.setCurrentIndex(0)
-    # clear data
     self.clearData()
 
-  def clearData(self):
+  def clearData(self) -> None:
     self.emp_id = None
     self.copiesSlider.setValue(1)
     self.empName.setText("Unknown employee")
