@@ -1,6 +1,5 @@
 from sys import exit
 from readwrite_lib import Rfid
-from app_vars import AppVariables
 
 def main():
     print("\nRead/Write tool for RC522")
