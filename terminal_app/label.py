@@ -13,8 +13,8 @@ class Label:
 
     def create(self, emp_id: str, copies: int) -> list:
         """
-        Create label file as PNG. Parameter data is dictionary with emp_id and label_id.
-
+        Create label file as PNG. Parameter data is dictionary with emp_id and label_id. 
+        
         Return list with 2 elements: 
         list[0] is result code (0 - error, 1 - success), 
         list[1] is dict of label data or error message
@@ -66,36 +66,13 @@ class Label:
                     except Exception:
                         font = ImageFont.load_default()
 
-                    # Measure text before calculating QR size
-                    bbox = draw.textbbox((0, 0), label_text, font=font, anchor="lt")
-                    text_width = bbox[2] - bbox[0]
-                    text_height = bbox[3] - bbox[1]
+                    bbox = draw.textbbox((0, 0), label_text, font=font)
+                    w = bbox[2] - bbox[0]
+                    h = bbox[3] - bbox[1]
 
-                    # Add extra padding for descenders and ensure text fits
-                    text_height_with_margin = text_height + 10  # extra pixels
-
-                    # QR code takes remaining space
-                    available_height = label_size[1] - (2 * padding) - text_height_with_margin - gap
-                    qr_size = min(available_height, label_size[0] - (2 * padding))  # keep it square
-
-                    # Calculate total content height for vertical centering
-                    total_content_height = qr_size + gap + text_height_with_margin
-                    
-                    # Center vertically: start from middle and offset by half of total content
-                    y_start = (label_size[1] - total_content_height) // 2
-                    
-                    # Resize QR to exact square size
-                    qr_small = qr_img.resize((qr_size, qr_size), Image.Resampling.LANCZOS)
-
-                    # Paste QR centered horizontally
-                    x_qr = (label_size[0] - qr_size) // 2
-                    y_qr = y_start 
-                    img.paste(qr_small, (x_qr, y_qr))
-
-                    # Position text relative to QR
-                    x_text = (label_size[0] - text_width) // 2 
-                    y_text = y_qr + qr_size + gap
-                    draw.text((x_text, y_text), label_text, fill="black", font=font, anchor="lt")
+                    # Position text at bottom with padding
+                    y_text = label_size[1] - padding - h
+                    draw.text(((label_size[0] - w)//2, y_text), label_text, fill="black", font=font)
 
                     # Save
                     fname = f"{self.config.label_file}-{i}{self.config.label_file_extension}"
