@@ -41,7 +41,7 @@ class Config():
     self.label_text_height = 20  # reserve space for text at bottom
     self.label_gap = 5  # small gap between QR and text
     self.label_font_path = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
-    self.label_font_size = 14
+    self.label_font_size = 28
     self.label_id_min = 1000000
     self.label_id_max = 9999999
     self.label_id_check = True # check if label ID already exists in database
