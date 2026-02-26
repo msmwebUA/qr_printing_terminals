@@ -24,7 +24,7 @@ class ScanCard():
       while True:
         # Check if timeout exceeded
         if time.time() - start_time > self.config.scan_timeout:
-          raise Exception("Scan timeout {self.config.scan_timeout} seconds exceeded.")
+          raise Exception(f"Scan timeout {self.config.scan_timeout} seconds exceeded.")
         id, text = reader.read_no_block()
         if (id and text):
           return [1, text.strip()]
