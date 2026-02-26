@@ -13,7 +13,7 @@ from PySide6.QtCore import Qt, QElapsedTimer, QTimer, QDateTime
 from ui import Ui_MainWindow
 
 class App(QMainWindow, Ui_MainWindow):
-  def __init__(self):
+  def __init__(self) -> None:
     super().__init__()
     self.setupUi(self)
     
@@ -56,20 +56,18 @@ class App(QMainWindow, Ui_MainWindow):
     # init database
     self.db = Database(self.config)
   
-  def mousePressEvent(self, event):
+  def mousePressEvent(self, event) -> None:
     # Count clicks (reset, if > 2 sec)
     if self.click_count == 0 or self.click_timer.elapsed() > self.config.click_timeout:
         self.click_count = 1
         self.click_timer.start()
     else:
         self.click_count += 1
-
     # Check number of clicks
     if self.click_count >= self.config.click_to_exit:
         self.minimizeToWindow()
-        self.click_count = 0 # Скидаємо лічильник
-
-    # Дозволяємо кнопкам всередині вікна працювати
+        self.click_count = 0 # reset counter
+    # Allow the parent class to handle the event
     super().mousePressEvent(event)
 
   def minimizeToWindow(self):
@@ -155,7 +153,6 @@ class App(QMainWindow, Ui_MainWindow):
       # show alert and clear data
       self.showAlert("Print Error", alert if alert else error, "critical")
 
-  # return to start page
   def cancel(self) -> None:
     # go back to start page
     self.stackedWidget.setCurrentIndex(0)

@@ -70,7 +70,6 @@ class Database:
     })
   
   def execute(self, params: dict) -> None:
-    
     """
     Executes a database query with parameters.
 

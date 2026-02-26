@@ -15,8 +15,7 @@ class Config():
     self.click_timeout = 2000 # ms
 
     # SCANNING
-    # max scan times per read action
-    self.max_scans = 30
+    # scan timeout
     self.scan_timeout = 40 # seconds
 
     # PRINTER
