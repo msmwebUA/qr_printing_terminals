@@ -39,6 +39,8 @@ FILES=("app.py" "config.py" "database.py" "label.py" "main.py" "print_label.py" 
 for file in "${FILES[@]}"; do
     mv "$REPO_DIR/terminal_app/$file" "$TARGET_DIR/"
 done
+# Make update script executable
+chmod +x $TARGET_DIR/update.sh
 
 echo "--- Setting up Python Virtual Environment ---"
 rm -rf $VENV_PATH
@@ -55,12 +57,27 @@ source "\$VENV_PATH" && python3 "\$APP_PATH"
 EOF
 chmod +x "$TARGET_DIR/start_app.sh"
 
+echo "--- Install emoji font ---"
+sudo apt install -y fonts-noto-color-emoji
+
 echo "--- Cleanup ---"
 rm -rf $REPO_DIR
 
-echo "Your terminal is configured in $TARGET_DIR"
+echo "################
+1. Remember to set touchscreen after reboot:
+1.1 Set brightness and turn on Multitouch Mode
 
-read -p "Reboot required. Do you want to reboot now? (y/n) " -n 1 -r
+Menu → Preferences → Control Centre → Screens → Screens → DSI-1 → Brightness
+DSI-1 → Touchscreen → Mode (for multitouch configuration)
+Also enable **10-0014 Goodix Touchscreen** (or your touchscreen name) in the same Touchscreen Menu
+
+1.2 Enable Single Click in File Manager to open directories
+
+2. After reboot, consider to upgrade all system packages with command:
+sudo apt upgrade
+################"
+
+read -p "Your terminal application is installed in $TARGET_DIR. Reboot required. Do you want to reboot now? (y/n) " -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
