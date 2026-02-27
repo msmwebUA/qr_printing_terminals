@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Start logging
-LOG_FILE="$HOME/setup_log.txt"
+LOG_FILE="$HOME/Documents/setup_log.txt"
 exec > >(tee -i "$LOG_FILE") 2>&1
 
 echo "=========================================="
@@ -14,17 +14,27 @@ REPO_DIR="qr_printing_terminals"
 TARGET_DIR="$HOME/Documents/terminal_app"
 VENV_PATH="$HOME/Documents/venv"
 
-echo "--- Step 0: Updating system packages ---"
+echo "--- Updating system packages ---"
 sudo apt update
-sudo apt upgrade -y
+# sudo apt upgrade -y
 
-echo "--- Step 1: Cloning repository ---"
+echo "--- Cloning application repository ---"
 git clone $REPO_URL
 
+echo "--- Hardware configuration ---"
+# Make scripts executable and run them
+chmod +x $REPO_DIR/rc522/rc_configuration.sh
+chmod +x $REPO_DIR/ql700/ql_configuration.sh
+chmod +x $REPO_DIR/waveshare/touchscreen_configuration.sh
+
+./$REPO_DIR/rc522/rc_configuration.sh
+./$REPO_DIR/ql700/ql_configuration.sh
+./$REPO_DIR/waveshare/touchscreen_configuration.sh
+
+echo "--- Moving application files ---"
 # Create target directory
 mkdir -p $TARGET_DIR
 
-echo "--- Moving application files ---"
 FILES=("app.py" "config.py" "database.py" "label.py" "main.py" "print_label.py" "resources_rc.py" "scan_card.py" "ui.py" "update.sh")
 for file in "${FILES[@]}"; do
     mv "$REPO_DIR/terminal_app/$file" "$TARGET_DIR/"
@@ -44,16 +54,6 @@ APP_PATH="\$HOME/Documents/terminal_app/main.py"
 source "\$VENV_PATH" && python3 "\$APP_PATH"
 EOF
 chmod +x "$TARGET_DIR/start_app.sh"
-
-echo "--- Hardware configuration ---"
-# Make scripts executable and run them
-chmod +x $REPO_DIR/rc522/rc_configuration.sh
-chmod +x $REPO_DIR/ql700/ql_configuration.sh
-chmod +x $REPO_DIR/waveshare/touchscreen_configuration.sh
-
-./$REPO_DIR/rc522/rc_configuration.sh
-./$REPO_DIR/ql700/ql_configuration.sh
-./$REPO_DIR/waveshare/touchscreen_configuration.sh
 
 echo "--- Cleanup ---"
 rm -rf $REPO_DIR
