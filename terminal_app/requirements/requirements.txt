@@ -12,6 +12,6 @@ rpi-lgpio==0.6
 RPi.GPIO==0.7.1
 spidev==3.8
 PySide6==6.10.2
-PySide6_Addons==6.10.2
+# PySide6_Addons==6.10.2
 PySide6_Essentials==6.10.2
 shiboken6==6.10.2

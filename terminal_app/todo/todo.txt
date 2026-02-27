@@ -1,0 +1,12 @@
+- test app in mode when do not check label_id in database
+
+- Make instruction for printer usage
+
+- Consider auto cancel on print page (after timeout defined in config)
+
+
+pyside6-uic ui/mainwin.ui -o ui.py
+
+pyside6-rcc ui/resources.qrc -o resources_rc.py
+
+sudo apt install fonts-noto-color-emoji

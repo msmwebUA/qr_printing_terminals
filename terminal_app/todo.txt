@@ -1,9 +1,0 @@
-# TODO: check if printer is online
-# TODO: check if printer has paper
-# TODO: create index for label_id table if not exists (on database object initialization)
-
-- Make UI for program
-
-- Free resources used in program
-
-- Program for writing empid data to rfid cards (simple and with UI)

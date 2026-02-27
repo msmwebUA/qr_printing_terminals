@@ -23,7 +23,7 @@ rm -rf $VENV_PATH
 python3 -m venv $VENV_PATH
 source "$VENV_PATH/bin/activate"
 pip install --upgrade pip
-pip install -r "$REPO_DIR/terminal_app/requirenments.txt"
+pip install -r "$REPO_DIR/terminal_app/requirements/requirements.txt"
 
 echo "--- Creating startup script start_app.sh ---"
 cat <<EOF > "$TARGET_DIR/start_app.sh"
