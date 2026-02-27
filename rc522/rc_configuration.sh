@@ -15,6 +15,6 @@ fi
 echo "Installing lgpio dependencies..."
 # Raspberry Pi 5 requires lgpio as the older RPi.GPIO is deprecated for hardware access
 # sudo apt update
-sudo apt install -y python3-lgpio liblgpio-dev
+sudo apt install -y swig python3-lgpio liblgpio-dev
 
 echo "SPI configuration finished. A reboot is recommended for all changes to take effect."
