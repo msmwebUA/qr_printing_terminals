@@ -13,7 +13,7 @@ git clone $REPO_URL
 mkdir -p $TARGET_DIR
 
 echo "--- Moving application files ---"
-FILES=("app.py" "config.py" "database.py" "label.py" "main.py" "print_label.py" "resources_rc.py" "scan_card.py" "ui.py")
+FILES=("app.py" "config.py" "database.py" "label.py" "main.py" "print_label.py" "resources_rc.py" "scan_card.py" "ui.py" "update.sh")
 for file in "${FILES[@]}"; do
     mv "$REPO_DIR/terminal_app/$file" "$TARGET_DIR/"
 done
