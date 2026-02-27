@@ -34,15 +34,9 @@ elif [ -d "/sys/class/backlight/4-0045" ]; then
     echo 102 | sudo tee /sys/class/backlight/4-0045/brightness
 fi
 
-# 4. Enable Single Click to open directories in PCManFM (Default File Manager)
+# 4. Enable Single Click to open directories in file manager
 echo "Setting file manager to single-click mode..."
-CONF_PATH="$HOME/.config/pcmanfm/lxqt/settings.conf"
-if [ -f "$CONF_PATH" ]; then
-    sed -i 's/single_click=0/single_click=1/g' "$CONF_PATH"
-else
-    # Create basic config if it doesn't exist
-    mkdir -p "$(dirname "$CONF_PATH")"
-    echo -e "[General]\nsingle_click=1" > "$CONF_PATH"
-fi
+# Update libfm.conf
+sed -i 's/single_click=0/single_click=1/g' ~/.config/libfm/libfm.conf
 
 echo "Touchscreen configuration applied."

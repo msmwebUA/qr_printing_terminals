@@ -12,9 +12,9 @@ if ! grep -q "^dtparam=spi=on" /boot/firmware/config.txt; then
 fi
 
 # 2. Install system dependencies
-echo "Updating system and installing lgpio dependencies..."
+echo "Installing lgpio dependencies..."
 # Raspberry Pi 5 requires lgpio as the older RPi.GPIO is deprecated for hardware access
-sudo apt update
+# sudo apt update
 sudo apt install -y python3-lgpio liblgpio-dev
 
 echo "SPI configuration finished. A reboot is recommended for all changes to take effect."

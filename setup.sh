@@ -1,10 +1,22 @@
 #!/bin/bash
 
+# Start logging
+LOG_FILE="$HOME/setup_log.txt"
+exec > >(tee -i "$LOG_FILE") 2>&1
+
+echo "=========================================="
+echo "STARTING TERMINAL SETUP: $(date)"
+echo "=========================================="
+
 # Define paths
 REPO_URL="https://github.com/msmwebUA/qr_printing_terminals.git"
 REPO_DIR="qr_printing_terminals"
 TARGET_DIR="$HOME/Documents/terminal_app"
 VENV_PATH="$HOME/Documents/venv"
+
+echo "--- Step 0: Updating system packages ---"
+sudo apt update
+sudo apt upgrade -y
 
 echo "--- Step 1: Cloning repository ---"
 git clone $REPO_URL
@@ -21,9 +33,8 @@ done
 echo "--- Setting up Python Virtual Environment ---"
 rm -rf $VENV_PATH
 python3 -m venv $VENV_PATH
-source "$VENV_PATH/bin/activate"
-pip install --upgrade pip
-pip install -r "$REPO_DIR/terminal_app/requirements/requirements.txt"
+"$VENV_PATH/bin/pip" install --upgrade pip
+"$VENV_PATH/bin/pip" install -r "$REPO_DIR/terminal_app/requirements/requirements.txt"
 
 echo "--- Creating startup script start_app.sh ---"
 cat <<EOF > "$TARGET_DIR/start_app.sh"
@@ -36,13 +47,13 @@ chmod +x "$TARGET_DIR/start_app.sh"
 
 echo "--- Hardware configuration ---"
 # Make scripts executable and run them
-chmod +x $REPO_DIR/waveshare/touchscreen_configuration.sh
 chmod +x $REPO_DIR/rc522/rc_configuration.sh
 chmod +x $REPO_DIR/ql700/ql_configuration.sh
+chmod +x $REPO_DIR/waveshare/touchscreen_configuration.sh
 
-./$REPO_DIR/waveshare/touchscreen_configuration.sh
 ./$REPO_DIR/rc522/rc_configuration.sh
 ./$REPO_DIR/ql700/ql_configuration.sh
+./$REPO_DIR/waveshare/touchscreen_configuration.sh
 
 echo "--- Cleanup ---"
 rm -rf $REPO_DIR

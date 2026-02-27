@@ -5,9 +5,9 @@ PRODUCT_ID="04f9"
 VENDOR_ID="2042"
 
 # 1. Update the system
-echo "Updating system packages..."
-sudo apt update
-sudo apt upgrade -y
+# echo "Updating system packages..."
+# sudo apt update
+# sudo apt upgrade -y
 
 # 2. Install system packages / libraries
 echo "Installing required system libraries..."
@@ -28,7 +28,4 @@ echo "Adding current user to the 'lp' group..."
 sudo usermod -aG lp $USER
 
 # 6. Apply group changes
-echo "Configuration complete. Applying group changes..."
-# Note: newgrp starts a new shell. If running as part of a larger automation, 
-# a logout/login or reboot is usually preferred to ensure all processes see the group.
-newgrp lp
+echo "Group assignment updated. Changes will take effect after the final reboot."
