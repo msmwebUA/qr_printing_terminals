@@ -40,3 +40,5 @@ echo "Setting file manager to single-click mode..."
 sed -i 's/single_click=0/single_click=1/g' ~/.config/libfm/libfm.conf
 
 echo "Touchscreen configuration applied."
+
+echo "Remember to set screen mode to Multitouch manually after reboot."
