@@ -23,7 +23,7 @@ echo "Step 3: Installing/Updating libraries from requirements.txt..."
 if [ -f "$VENV_PATH" ]; then
     source "$VENV_PATH"
     pip install --upgrade pip
-    pip install -r "$REPO_DIR/terminal_app/requirenments.txt"
+    pip install -r "$REPO_DIR/terminal_app/requirements/requirements.txt"
 else
     echo "Warning: Virtual environment not found at $VENV_PATH. Skipping library installation."
 fi
