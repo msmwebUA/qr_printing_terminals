@@ -27,9 +27,9 @@ chmod +x $REPO_DIR/rc522/rc_configuration.sh
 chmod +x $REPO_DIR/ql700/ql_configuration.sh
 chmod +x $REPO_DIR/waveshare/touchscreen_configuration.sh
 
-./$REPO_DIR/rc522/rc_configuration.sh
-./$REPO_DIR/ql700/trixie/ql_configuration.sh
-./$REPO_DIR/waveshare/touchscreen_configuration.sh
+./$REPO_DIR/rc522/bookworm/rc_configuration.sh
+./$REPO_DIR/ql700/bookworm/ql_configuration.sh
+./$REPO_DIR/edatec/touchscreen_configuration.sh
 
 echo "--- Moving application files ---"
 # Create target directory
@@ -46,7 +46,7 @@ echo "--- Setting up Python Virtual Environment ---"
 rm -rf $VENV_PATH
 python3 -m venv $VENV_PATH
 "$VENV_PATH/bin/pip" install --upgrade pip
-"$VENV_PATH/bin/pip" install -r "$REPO_DIR/terminal_app/requirements/requirements.txt"
+"$VENV_PATH/bin/pip" install -r "$REPO_DIR/terminal_app/requirements/bookworm/requirements.txt"
 
 echo "--- Creating startup script start_app.sh ---"
 cat <<EOF > "$TARGET_DIR/start_app.sh"
@@ -65,11 +65,9 @@ rm -rf $REPO_DIR
 
 echo "################
 1. Remember to set touchscreen after reboot:
-1.1 Set brightness and turn on Multitouch Mode
+1.1 Set brightness
 
-Menu → Preferences → Control Centre → Screens → Screens → DSI-1 → Brightness
-DSI-1 → Touchscreen → Mode (for multitouch configuration)
-Also enable **10-0014 Goodix Touchscreen** (or your touchscreen name) in the same Touchscreen Menu
+Menu → Preferences → Screen Configuration → Screens → DSI-2 → Brightness
 
 1.2 Enable Single Click in File Manager to open directories
 

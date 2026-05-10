@@ -23,11 +23,11 @@ git clone $REPO_URL
 
 echo "--- Hardware configuration ---"
 # Make scripts executable and run them
-chmod +x $REPO_DIR/rc522/rc_configuration.sh
-chmod +x $REPO_DIR/ql700/ql_configuration.sh
+chmod +x $REPO_DIR/rc522/trixie/rc_configuration.sh
+chmod +x $REPO_DIR/ql700/trixie/ql_configuration.sh
 chmod +x $REPO_DIR/waveshare/touchscreen_configuration.sh
 
-./$REPO_DIR/rc522/rc_configuration.sh
+./$REPO_DIR/rc522/trixie/rc_configuration.sh
 ./$REPO_DIR/ql700/trixie/ql_configuration.sh
 ./$REPO_DIR/waveshare/touchscreen_configuration.sh
 
@@ -46,7 +46,7 @@ echo "--- Setting up Python Virtual Environment ---"
 rm -rf $VENV_PATH
 python3 -m venv $VENV_PATH
 "$VENV_PATH/bin/pip" install --upgrade pip
-"$VENV_PATH/bin/pip" install -r "$REPO_DIR/terminal_app/requirements/requirements.txt"
+"$VENV_PATH/bin/pip" install -r "$REPO_DIR/terminal_app/requirements/trixie/requirements.txt"
 
 echo "--- Creating startup script start_app.sh ---"
 cat <<EOF > "$TARGET_DIR/start_app.sh"
