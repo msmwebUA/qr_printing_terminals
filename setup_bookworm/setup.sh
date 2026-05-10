@@ -28,7 +28,7 @@ chmod +x $REPO_DIR/ql700/ql_configuration.sh
 chmod +x $REPO_DIR/waveshare/touchscreen_configuration.sh
 
 ./$REPO_DIR/rc522/rc_configuration.sh
-./$REPO_DIR/ql700/ql_configuration.sh
+./$REPO_DIR/ql700/trixie/ql_configuration.sh
 ./$REPO_DIR/waveshare/touchscreen_configuration.sh
 
 echo "--- Moving application files ---"
