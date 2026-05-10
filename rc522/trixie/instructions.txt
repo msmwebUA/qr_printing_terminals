@@ -2,12 +2,12 @@
     RC522 → Raspberry Pi 5 GPIO pins:
     * SDA (SS) → GPIO 8 (Pin 24)
     * SCK → GPIO 11 (Pin 23)
-    * MOSI → GPIO 10 (Pin 19)
-    * MISO → GPIO 9 (Pin 21)
-    * IRQ → Not connected (optional)
-    * GND → Ground (Pin 20)
     * RST → GPIO 25 (Pin 22)
+    * MISO → GPIO 9 (Pin 21)
+    * GND → Ground (Pin 20)
+    * MOSI → GPIO 10 (Pin 19)
     * 3.3V → 3.3V (Pin 17)
+    * IRQ → Not connected (optional)
 
 # 1. Enable SPI interface 
 	sudo raspi-config 
