@@ -9,6 +9,7 @@ class ScanCard():
 
   def __init__(self, config: object) -> None:
     self.config = config
+    self.reader = SimpleMFRC522()
 
   def read(self) -> list:
     """
@@ -20,12 +21,11 @@ class ScanCard():
     """
     start_time = time.time()
     try:
-      reader = SimpleMFRC522()
       while True:
         # Check if timeout exceeded
         if time.time() - start_time > self.config.scan_timeout:
           raise Exception(f"Scan timeout {self.config.scan_timeout} seconds exceeded.")
-        id, text = reader.read_no_block()
+        id, text = self.reader.read_no_block()
         if (id and text):
           return [1, text.strip()]
         # small delay between scans to prevent CPU overload
