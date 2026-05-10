@@ -16,6 +16,8 @@ EOF
 echo "Setting timezone to Europe/Helsinki..."
 
 sudo timedatectl set-timezone Europe/Helsinki
+echo "Europe/Helsinki" | sudo tee /etc/timezone
+sudo ln -sf /usr/share/zoneinfo/Europe/Helsinki /etc/localtime
 
 echo "Setting WLAN country to Finland (FI)..."
 
