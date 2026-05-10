@@ -1,0 +1,11 @@
+On Edatec HMI-3010-xxxx with RPI OS Bookworm:
+
+1. Change brightness in Menu → Preferences → Screen Configuration → Screens → DSI-2 → Brightness
+2. Enable touchscreen and multitouch in Menu → Preferences → Screen Configuration → Screens → DSI-2 → Touchscreen
+2. Enable Screen Blanking Preferences → Raspberry Pi Configuration → Display
+4. Change password and hostname (pimachineX) in Preferences → Raspberry Pi Configuration
+5. Connect to WLAN
+6. Check for updates and update OS
+7. Enable RPI Connect and add device
+8. Enable file open by single click in file manager
+9. Copy setup.sh script (setup_bookworm dir) to Documents on device and run it

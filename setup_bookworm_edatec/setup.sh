@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# CHECK MANUAL SETTINGS IN EDATEC DIR BEFORE RUN THIS SCRIPT
+
 # Start logging
 LOG_FILE="$HOME/Documents/setup_log.txt"
 exec > >(tee -i "$LOG_FILE") 2>&1
@@ -63,17 +65,7 @@ sudo apt install -y fonts-noto-color-emoji
 echo "--- Cleanup ---"
 rm -rf $REPO_DIR
 
-echo "################
-1. Remember to set touchscreen after reboot:
-1.1 Set brightness
-
-Menu → Preferences → Screen Configuration → Screens → DSI-2 → Brightness
-
-1.2 Enable Single Click in File Manager to open directories
-
-2. After reboot, consider to upgrade all system packages with command:
-sudo apt upgrade
-################"
+echo "REMEMBER TO CHECK MANUAL SETTINGS LIST FOR EDATEC HMI"
 
 read -p "Your terminal application is installed in $TARGET_DIR. Reboot required. Do you want to reboot now? (y/n) " -n 1 -r
 echo
