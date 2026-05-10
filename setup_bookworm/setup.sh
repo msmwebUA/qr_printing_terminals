@@ -23,9 +23,9 @@ git clone $REPO_URL
 
 echo "--- Hardware configuration ---"
 # Make scripts executable and run them
-chmod +x $REPO_DIR/rc522/rc_configuration.sh
-chmod +x $REPO_DIR/ql700/ql_configuration.sh
-chmod +x $REPO_DIR/waveshare/touchscreen_configuration.sh
+chmod +x $REPO_DIR/rc522/bookworm/rc_configuration.sh
+chmod +x $REPO_DIR/ql700/bookworm/ql_configuration.sh
+chmod +x $REPO_DIR/edatec/touchscreen_configuration.sh
 
 ./$REPO_DIR/rc522/bookworm/rc_configuration.sh
 ./$REPO_DIR/ql700/bookworm/ql_configuration.sh
